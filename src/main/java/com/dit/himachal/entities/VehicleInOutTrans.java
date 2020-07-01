@@ -33,10 +33,10 @@ public class VehicleInOutTrans implements Serializable {
 	@Column(name = "longitude")
 	private Double longitude;
 
-	@Column(name = "longitude")
+	@Column(name = "is_active")
 	private boolean isActive;
 
-	@Column(name = "longitude")
+	@Column(name = "remarks")
 	private String remarks;
 
 	public static long getSerialVersionUID() {
