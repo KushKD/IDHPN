@@ -19,7 +19,7 @@ public class VehicleInOutTrans implements Serializable {
 	private Long transId;
 
 	@Column(name = "vehicle_owner_id")
-	private String vehicleOwnerId;
+	private Integer vehicleOwnerId;
 	
 	@Column(name = "captured_by")
 	private Integer capturedBy;
@@ -51,11 +51,11 @@ public class VehicleInOutTrans implements Serializable {
 		this.transId = transId;
 	}
 
-	public String getVehicleOwnerId() {
+	public Integer getVehicleOwnerId() {
 		return vehicleOwnerId;
 	}
 
-	public void setVehicleOwnerId(String vehicleOwnerId) {
+	public void setVehicleOwnerId(Integer vehicleOwnerId) {
 		this.vehicleOwnerId = vehicleOwnerId;
 	}
 
