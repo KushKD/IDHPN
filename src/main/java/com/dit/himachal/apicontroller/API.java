@@ -72,6 +72,9 @@ public class API {
     @Autowired
     private UserService userService;
 
+    @Autowired
+            private VehicleInOutService vehicleInOutService;
+
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -538,6 +541,51 @@ public class API {
                 map.put(Constants.keyMessage, Constants.valueMessage);
                 map.put(Constants.keyStatus, HttpStatus.OK);
                 return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
+
+
+        } else {
+            map = new HashMap<String, Object>();
+            map.put(Constants.keyResponse, "Invalid Data");
+            map.put(Constants.keyMessage, Constants.valueMessage);
+            map.put(Constants.keyStatus, HttpStatus.OK);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/saveVehicleData", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> saveVehicleDetails(@RequestBody VehicleInOutTrans jsondata) throws IOException {
+
+        VehicleInOutTrans vehicleInOutEntitity = null;
+        Map<String, Object> map = null;
+        System.out.println(jsondata);
+        if (jsondata != null) {
+
+
+            try {
+                vehicleInOutEntitity = vehicleInOutService.saveVehicleInOutTrans(jsondata);
+                if (vehicleInOutEntitity != null) {
+
+                    map = new HashMap<String, Object>();
+                    map.put(Constants.keyResponse, "Successfully Saved");
+                    map.put(Constants.keyMessage, Constants.valueMessage);
+                    map.put(Constants.keyStatus, HttpStatus.OK);
+                    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+                } else {
+                    map = new HashMap<String, Object>();
+                    map.put(Constants.keyResponse, "Unable to save the Data.");
+                    map.put(Constants.keyMessage, Constants.valueMessage);
+                    map.put(Constants.keyStatus, HttpStatus.OK);
+                    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+                }
+            }catch (Exception ex){
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, ex.getLocalizedMessage().toString());
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
             }
 
 

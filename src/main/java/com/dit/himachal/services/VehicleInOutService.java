@@ -25,9 +25,9 @@ public class VehicleInOutService {
 		this.vehicleInOutTransRepository = vehicleInOutTransRepository;
 	}
 
-	public Long saveVehicleInOutTrans(VehicleInOutTrans object) {
+	public VehicleInOutTrans saveVehicleInOutTrans(VehicleInOutTrans object) {
 		VehicleInOutTrans savedData = vehicleInOutTransRepository.save(object);
-		return Long.valueOf(savedData.getVehicleOwnerId());
+		return savedData;
 	}
 
 }
