@@ -498,7 +498,7 @@ public class API {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/verifyVehicle", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> v_vehicle(@RequestBody String jsondata) throws IOException {
+    public ResponseEntity<?> verifyvehicle(@RequestBody String jsondata) throws IOException {
 
         VehicleOwnerEntries vehicleUSerEntries = null;
         Map<String, Object> map = null;

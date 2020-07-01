@@ -185,5 +185,21 @@ lastmodifieddate timestamp without time zone
 )
 
 
+CREATE TABLE vehicle_in_out_trans (
+    in_out_trans_id serial PRIMARY KEY  NOT NULL,
+    vehicle_owner_id INTEGER NOT NULL,
+    captured_by INTEGER NOT NULL,
+    barrier_id INTEGER NOT NULL,
+    latitude DOUBLE PRECISION NOT NULL,
+    longitude DOUBLE PRECISION NOT NULL,
+    is_active boolean DEFAULT true NOT NULL,
+    modified_by INTEGER ,
+    modified_date DATE ,
+    remarks character varying(255),
+    createddate timestamp with time zone NOT NULL,
+    FOREIGN KEY (vehicle_owner_id) REFERENCES mst_vehicle_owner_entries(vehicle_owner_id),
+    FOREIGN KEY (captured_by) REFERENCES users(user_id),
+    FOREIGN KEY (barrier_id) REFERENCES mst_barrier(barrier_id)
 
+);
 
