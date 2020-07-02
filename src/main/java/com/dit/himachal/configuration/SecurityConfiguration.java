@@ -51,19 +51,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().maximumSessions(1);
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         //http.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
-       // http.csrf().disable();
-        http.csrf().ignoringAntMatchers("/nocsrf","/api/**");
-               // .anonymous()
-              //  .and()
-               http.authorizeRequests()
+        // http.csrf().disable();
+        http.csrf().ignoringAntMatchers("/nocsrf", "/api/**");
+        // .anonymous()
+        //  .and()
+        http.authorizeRequests()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/api/getotp/**").permitAll()
                 .antMatchers("/api/verifyotp/**").permitAll()
                 .antMatchers("/downloadFile/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 //.anyRequest().hasAnyRole("USER")
                 .anyRequest().authenticated()
@@ -74,8 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-               .clearAuthentication(true).invalidateHttpSession(true).deleteCookies("JSESSIONID");
-
+                .clearAuthentication(true).invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .and().sessionManagement().maximumSessions(1);
 
 
     }

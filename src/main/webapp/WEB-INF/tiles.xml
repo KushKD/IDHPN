@@ -16,6 +16,6 @@
     </definition>
 
     <definition name="error" extends="baselayout">
-        <put-attribute name="content" value="/WEB-INF/jsp/error.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/errorpage.jsp" />
     </definition>
 </tiles-definitions>

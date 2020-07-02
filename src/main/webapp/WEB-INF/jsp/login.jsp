@@ -3,7 +3,9 @@
 	<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
-
+<script>
+document.getElementById("password_").maxLength = "10";
+</script>
 <body>
 
  <c:if test="${param.error != null}">
@@ -19,8 +21,9 @@
 				placeholder="Username" required autofocus>
 		</p>
 		<p>
-			<label class="password" maxlength="10" size="10" for="password" >Password</label> <input
-				type="password" id="password" name="password"
+			<label  class="password"  for="password" >Password</label>
+			<input id="password_"
+				type="password" id="password" width="30px" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" maxLength="10" size="10"
 				placeholder="Password" required>
 		</p>
 
