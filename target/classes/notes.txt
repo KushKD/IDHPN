@@ -192,11 +192,11 @@ CREATE TABLE vehicle_in_out_trans (
     barrier_id INTEGER NOT NULL,
     latitude DOUBLE PRECISION NOT NULL,
     longitude DOUBLE PRECISION NOT NULL,
-    is_active boolean DEFAULT true NOT NULL,
+    is_active boolean NOT NULL DEFAULT true,
     modified_by INTEGER ,
     modified_date DATE ,
     remarks character varying(255),
-    createddate timestamp with time zone NOT NULL,
+    createddate timestamp with time zone NOT NULL DEFAULT now(),
     FOREIGN KEY (vehicle_owner_id) REFERENCES mst_vehicle_owner_entries(vehicle_owner_id),
     FOREIGN KEY (captured_by) REFERENCES users(user_id),
     FOREIGN KEY (barrier_id) REFERENCES mst_barrier(barrier_id)

@@ -90,6 +90,8 @@ public class GeneratePdfReport {
             childTable1.setWidths(columnWidthsnested);
             childTable1.addCell("Name:");
             childTable1.addCell(new Phrase(vehicleOwnerEntries.getVehicleOwnerName(),boldFont2));
+            childTable1.addCell("Vehicle Number:");
+            childTable1.addCell(new Phrase(vehicleOwnerEntries.getVehicleOwnerVehicleNumber(),boldFont2));
             childTable1.addCell("Chassis Number:");
             childTable1.addCell(new Phrase(vehicleOwnerEntries.getVehicleOwnerChassisNumber(),boldFont2));
             childTable1.addCell("Driving Licence Number:");

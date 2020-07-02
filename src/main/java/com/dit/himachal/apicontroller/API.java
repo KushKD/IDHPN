@@ -599,4 +599,59 @@ public class API {
 
     }
 
+    //searchId
+    @RequestMapping(method = RequestMethod.POST, value = "/api/searchId", consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> searchIdCard(@RequestBody String jsondata) throws IOException {
+
+        VehicleOwnerEntries vehicleUSerEntries = null;
+        Map<String, Object> map = null;
+        System.out.println(jsondata);
+        if (jsondata != null) {
+            JsonElement jelement = new JsonParser().parse(jsondata);
+            JsonObject jobject = jelement.getAsJsonObject();
+            String vehicle_number = jobject.get("vehicle_number").getAsString();
+            Long mobile_number = jobject.get("mobile_number").getAsLong();
+
+
+            vehicleUSerEntries = entriesService.searchIdentity(mobile_number, vehicle_number);
+            if (vehicleUSerEntries != null) {
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/downloadFile/")
+                        .path(vehicleUSerEntries.getVehicleOwnerImageName())
+                        .toUriString();
+
+
+                //Save Vehicle Entries
+
+                String generatePdfUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/api/generateqrcode/")
+                        .path(Utilities.base64Encode(Long.toString(vehicleUSerEntries.getVehicleOwnerId())))
+                        .toUriString();
+
+
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, new UploadFileResponse("", fileDownloadUri, generatePdfUrl, "", 0, vehicleUSerEntries));
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            } else {
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, "No Data Found");
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
+
+
+        } else {
+            map = new HashMap<String, Object>();
+            map.put(Constants.keyResponse, "Invalid Data");
+            map.put(Constants.keyMessage, Constants.valueMessage);
+            map.put(Constants.keyStatus, HttpStatus.OK);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+    }
+
 }

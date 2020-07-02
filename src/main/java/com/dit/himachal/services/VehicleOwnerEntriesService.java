@@ -45,4 +45,10 @@ public class VehicleOwnerEntriesService {
 
 	}
 
+	public VehicleOwnerEntries searchIdentity(Long mobile, String vehicle_number) {
+
+		return  vehicleOwnerEntriesRepository.SeachIDCArd(mobile,vehicle_number);
+
+	}
+
 }
