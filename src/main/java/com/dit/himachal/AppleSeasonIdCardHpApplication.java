@@ -14,9 +14,15 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.dit.himachal.property.FileStorageProperties;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 @EnableConfigurationProperties({FileStorageProperties.class})
@@ -26,6 +32,11 @@ public class AppleSeasonIdCardHpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AppleSeasonIdCardHpApplication.class, args);
 	}
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 	
 	@Bean("threadPoolTaskExecutor")
     public TaskExecutor getAsyncExecutor() {
@@ -58,5 +69,6 @@ public class AppleSeasonIdCardHpApplication {
 //                    .setCachePeriod(0);
 //        }
 //    }
+
 
 }
