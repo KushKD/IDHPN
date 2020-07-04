@@ -78,6 +78,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // .anonymous()
         //  .and()
         http.authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/api/getotp/**").permitAll()
                 .antMatchers("/api/verifyotp/**").permitAll()

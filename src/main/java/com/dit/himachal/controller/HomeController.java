@@ -36,4 +36,11 @@ public class HomeController {
         return "homepage";
     }
 
+    @RequestMapping(value =  "/" , method = RequestMethod.GET)
+    public String index(Model model) {
+        System.out.println("We are here");
+
+        return "index";
+    }
+
 }

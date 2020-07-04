@@ -11,6 +11,10 @@
         <put-attribute name="content" value="/WEB-INF/views/home.jsp" />
     </definition>
 
+    <definition name="index" extends="baselayout">
+        <put-attribute name="content" value="/WEB-INF/views/index.jsp" />
+    </definition>
+
     <definition name="login" extends="baselayout">
         <put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
     </definition>
