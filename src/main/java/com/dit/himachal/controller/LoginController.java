@@ -27,28 +27,28 @@ public class LoginController {
         return "login";
     }
 
-//        @GetMapping(value =  "/verifylogin")
-//        public String homePagev(@RequestBody LoginForm data_) {
-//            System.out.println("#@#@#@#@#@#"+data_);
-//           // if(captchaResponse!=null ){
-//
-//             //   String url = "https://www.google.com/recaptcha/api/siteverify";
-//               // String params = "?secret=6LeFwKwZAAAAAH65Ik0Cp-h4hY8T0Z7HEwCyntIt&response="+captchaResponse;
-//               // ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST, null, ReCaptchaResponse.class).getBody();
-//               // if(reCaptchaResponse.isSuccess()) {
-//
-//                 //   System.out.println("Valid");
-//                  //  return "index";
-//                //}else{
-//                  //  System.out.println("Captcha Invalid");
-//                   // return "login";
-//               // }
-//            //}else{
-//                return "login";
-//            //}
-//
-//
-//        }
+        @GetMapping(value =  "/verifylogin")
+        public String homePagev(@RequestBody LoginForm data_) {
+            System.out.println("#@#@#@#@#@#"+data_);
+           // if(captchaResponse!=null ){
+
+             //   String url = "https://www.google.com/recaptcha/api/siteverify";
+               // String params = "?secret=6LeFwKwZAAAAAH65Ik0Cp-h4hY8T0Z7HEwCyntIt&response="+captchaResponse;
+               // ReCaptchaResponse reCaptchaResponse = restTemplate.exchange(url+params, HttpMethod.POST, null, ReCaptchaResponse.class).getBody();
+               // if(reCaptchaResponse.isSuccess()) {
+
+                 //   System.out.println("Valid");
+                  //  return "index";
+                //}else{
+                  //  System.out.println("Captcha Invalid");
+                   // return "login";
+               // }
+            //}else{
+                return "login";
+            //}
+
+
+        }
 
 
 //    @RequestMapping(value = "/getDispatch", method = RequestMethod.POST)

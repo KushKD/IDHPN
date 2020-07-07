@@ -73,7 +73,7 @@ public class API {
     private UserService userService;
 
     @Autowired
-            private VehicleInOutService vehicleInOutService;
+    private VehicleInOutService vehicleInOutService;
 
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -580,7 +580,7 @@ public class API {
                     map.put(Constants.keyStatus, HttpStatus.OK);
                     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
                 }
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 map = new HashMap<String, Object>();
                 map.put(Constants.keyResponse, ex.getLocalizedMessage().toString());
                 map.put(Constants.keyMessage, Constants.valueMessage);

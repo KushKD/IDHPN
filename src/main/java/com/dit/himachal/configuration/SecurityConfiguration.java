@@ -84,7 +84,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/verifyotp/**").permitAll()
                 .antMatchers("/downloadFile/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
-
+                .antMatchers("/verifylogin/**").permitAll()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 //.anyRequest().hasAnyRole("USER")  validateCaptcha
                 .anyRequest().authenticated()
