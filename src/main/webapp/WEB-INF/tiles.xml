@@ -7,6 +7,18 @@
         <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
     </definition>
 
+    <definition name="baselayoutdashboard" template="/WEB-INF/views/layout_dashboard.jsp">
+        <put-attribute name="content" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/header_dashboard.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/footer_dashboard.jsp" />
+    </definition>
+
+    <definition name="baselayoutdashboardnonav" template="/WEB-INF/views/layout_dashboard.jsp">
+        <put-attribute name="content" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/header_dashboard_without_nav.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/footer_dashboard.jsp" />
+    </definition>
+
     <definition name="homepage" extends="baselayout">
         <put-attribute name="content" value="/WEB-INF/views/home.jsp" />
     </definition>
@@ -15,11 +27,27 @@
         <put-attribute name="content" value="/WEB-INF/views/index.jsp" />
     </definition>
 
-    <definition name="login" extends="baselayout">
-        <put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
-    </definition>
+
 
     <definition name="error" extends="baselayout">
         <put-attribute name="content" value="/WEB-INF/jsp/errorpage.jsp" />
     </definition>
+
+    <definition name="homepage_new" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/views/home_dashboard.jsp" />
+    </definition>
+
+    <definition name="createuser" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/registration.jsp" />
+    </definition>
+
+
+    <definition name="login" extends="baselayoutdashboardnonav">
+        <put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+    </definition>
+
+
+
+
+
 </tiles-definitions>

@@ -2,6 +2,7 @@ package com.dit.himachal.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +15,7 @@ public class UserEntity {
     private Long userId;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
 
     @Column(name = "password_")
@@ -27,7 +28,7 @@ public class UserEntity {
     private boolean active;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<RolesEntity> roles;
+    private Set<RolesEntity> roles;
 
 	public long getUserId() {
 		return userId;
@@ -38,11 +39,11 @@ public class UserEntity {
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 
 	public String getPassword() {
@@ -69,17 +70,17 @@ public class UserEntity {
 		this.active = active;
 	}
 
-	public List<RolesEntity> getRoles() {
+	public Set<RolesEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<RolesEntity> roles) {
+	public void setRoles(Set<RolesEntity> roles) {
 		this.roles = roles;
 	}
 
 	@Override
 	public String toString() {
-		return "UserEntity [userId=" + userId + ", userName=" + userName + ", password=" + password + ", mobileNumber="
+		return "UserEntity [userId=" + userId + ", userName=" + username + ", password=" + password + ", mobileNumber="
 				+ mobileNumber + ", active=" + active + ", roles=" + roles + "]";
 	}
 

@@ -1,25 +1,20 @@
 package com.dit.himachal.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.*;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -31,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -43,25 +37,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Qualifier("userDetailsServiceImpl")
+    @Autowired
+    private UserDetailsService userDetailsService;
+
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "Select username ,password_,active  from users where username = ?")
-                .authoritiesByUsernameQuery(
-                        "SELECT urm.user_id,  roles.role_name,urm.role_id, users.username from user_role_mapping as urm\n" +
-                                "INNER JOIN roles as roles ON roles.role_id = urm.role_id \n" +
-                                "INNER JOIN users as users ON users.user_id = urm.user_id WHERE users.username = ?")
-                .passwordEncoder(passwordEncoder);
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
     }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .usersByUsernameQuery(
+//                        "Select username ,password_,active  from users where username = ?")
+//                .authoritiesByUsernameQuery(
+//                        "SELECT urm.user_id,  roles.role_name,urm.role_id, users.username from user_role_mapping as urm\n" +
+//                                "INNER JOIN roles as roles ON roles.role_id = urm.role_id \n" +
+//                                "INNER JOIN users as users ON users.user_id = urm.user_id WHERE users.username = ?")
+//                .passwordEncoder(passwordEncoder);
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -80,13 +88,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/getotp/**").permitAll()
-                .antMatchers("/api/verifyotp/**").permitAll()
+               // .antMatchers("/api/getotp/**").permitAll()
+                //.antMatchers("/api/verifyotp/**").permitAll()
                 .antMatchers("/downloadFile/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/verifylogin/**").permitAll()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                //.anyRequest().hasAnyRole("USER")  validateCaptcha
+                .antMatchers("/createuser/**").hasAnyRole("ADMIN")
+                .antMatchers("/saveuser/").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -127,15 +135,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return repository;
     }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
-//        configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+
+
+
 }

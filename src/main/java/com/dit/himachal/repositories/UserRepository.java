@@ -15,4 +15,9 @@ public interface UserRepository extends CrudRepository<UserEntity,Long> {
 	
 	@Query(value="SELECT * FROM users WHERE mobile_number =:mobile ", nativeQuery = true)
 	 UserEntity getUserDetails(@Param("mobile") Long mobile );
+
+	UserEntity findByUsername(String username);
+
+	@Query(value="SELECT * FROM users WHERE mobile_number =:mobile ", nativeQuery = true)
+	UserEntity findByMobileNumber(@Param("mobile") Long mobile);
 }

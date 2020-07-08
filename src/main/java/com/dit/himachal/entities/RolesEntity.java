@@ -2,6 +2,7 @@ package com.dit.himachal.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="roles")
@@ -25,7 +26,7 @@ public class RolesEntity   {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role_mapping", joinColumns = @JoinColumn(name = "roleId", referencedColumnName = "role_id"),
                                            inverseJoinColumns = @JoinColumn(name = "userId", referencedColumnName = "user_id"))
-    private List<UserEntity> users;
+    private Set<UserEntity> users;
 
 	public int getRoleId() {
 		return roleId;
@@ -59,11 +60,11 @@ public class RolesEntity   {
 		this.active = active;
 	}
 
-	public List<UserEntity> getUsers() {
+	public Set<UserEntity> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<UserEntity> users) {
+	public void setUsers(Set<UserEntity> users) {
 		this.users = users;
 	}
 
