@@ -4,6 +4,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrapd.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/script.js"></script>
         <!-- The javascript plugin to display page loading on top-->
         <script src="${pageContext.request.contextPath}/resources/js/plugins/pace.min.js"></script>
         <!-- Page specific javascripts-->
@@ -49,9 +50,5 @@
           	}
           ]
 
-          var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-          var lineChart = new Chart(ctxl).Line(data);
 
-          var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-          var pieChart = new Chart(ctxp).Pie(pdata);
         </script>

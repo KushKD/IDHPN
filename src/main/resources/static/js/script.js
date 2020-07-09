@@ -2,7 +2,7 @@ function getContextPath() {
        return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
     }
 
-    var formURL = getContextPath()+"/verifylogin";
+    var formURL = getContextPath();
 
 
  function getFormData(){
@@ -19,8 +19,7 @@ function getContextPath() {
      }
 
  function submit1() {
-
-                           var data_ = JSON.stringify(getFormData());
+  var data_ = JSON.stringify(getFormData());
                            alert(formURL);
                            $.ajax({
                                type: "GET",
@@ -40,3 +39,33 @@ function getContextPath() {
 
                            });
                   }
+
+//ajaxcall
+                   var json = {
+                         "countryId" : "1"
+                        };
+                   function getroles() {
+                                             alert("we are heree...");
+                                             $.ajax({
+                                                 type: "GET",
+                                                 url:formURL+"/ajax/getRoles",
+                                                 data : {  "id" : 1  },
+                                                 success: function (data) {
+                                                     alert(data);
+                                                     console.log(data.RESPONSE)
+                                                      var selectRole = $('#roles'); // the state select element
+                                                             selectRole.find('option').remove();
+                                                               selectRole.append("<option value=" + 0 + " >" + "---Please Select---" + "</option>")
+                                                             for (i = 0; i < data.RESPONSE.length; i++) {
+                                                                 selectRole.append("<option value=" + data.RESPONSE[i].role_id + " >" + data.RESPONSE[i].role_name + "</option>")
+                                                             }
+
+                                                 },
+                                                 error: function(data){
+                                                      alert(data);
+                                                      console.log(data)
+                                                 }
+
+                                             });
+                                    }
+

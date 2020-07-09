@@ -33,7 +33,7 @@ public class CustomUserServiceImpl implements CustomUserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
        // Iterable<RolesEntity> entity  = roleRepository.findAll();
        // user.setRoles(getListFromIterator(entity));
-        user.setRoles(new HashSet<>((Collection) roleRepository.findAll()));
+       // user.setRoles(new HashSet<>((Collection) roleRepository.findAll()));
 
         userRepository.save(user);
     }

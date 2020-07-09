@@ -1,6 +1,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+ <script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/script.js"></script>
+
+<script type="text/javascript">
+console.log( "ready1 !" );
+  $( document ).ready(function() {
+      console.log( "ready2 !" );
+      getroles();
+  });
+   </script>
 
 <main class="app-content">
 
@@ -20,6 +30,13 @@
                                 <form:errors  path="mobileNumber"></form:errors>
                             </div>
                         </spring:bind>
+
+                         <div class="form-group">
+                           <label for="roles">Example select</label>
+                                            <select class="form-control" id="roles">
+
+                                            </select>
+                                          </div>
 
             <spring:bind path="password">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -41,3 +58,5 @@
 
     </div>
     </main>
+
+

@@ -27,14 +27,18 @@ public class UserEntity {
     @Column(name = "active")
     private boolean active;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<RolesEntity> roles;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role_mapping", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "role_id"))
 
-	public long getUserId() {
+ //   @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RolesEntity> roles;
+
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -70,11 +74,11 @@ public class UserEntity {
 		this.active = active;
 	}
 
-	public Set<RolesEntity> getRoles() {
+	public List<RolesEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<RolesEntity> roles) {
+	public void setRoles(List<RolesEntity> roles) {
 		this.roles = roles;
 	}
 

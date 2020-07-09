@@ -52,7 +52,7 @@
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">User Management</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="${pageContext.request.contextPath}/createUser"><i class="icon fa fa-circle-o"></i> Create User</a></li>
-            <li><a class="treeview-item" href="${pageContext.request.contextPath}/createRole" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Create Roles</a></li>
+            <li><a class="treeview-item" href="${pageContext.request.contextPath}/createRole" ><i class="icon fa fa-circle-o"></i> Create Role</a></li>
           </ul>
         </li>
         </sec:authorize>

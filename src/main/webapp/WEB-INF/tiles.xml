@@ -42,6 +42,11 @@
     </definition>
 
 
+    <definition name="createrole" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/rolesmaster.jsp" />
+    </definition>
+
+
     <definition name="login" extends="baselayoutdashboardnonav">
         <put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
     </definition>

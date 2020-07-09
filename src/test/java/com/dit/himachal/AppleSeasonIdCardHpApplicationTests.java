@@ -22,8 +22,8 @@ import com.dit.himachal.utilities.random24;
 @SpringBootTest
 class AppleSeasonIdCardHpApplicationTests {
 
-//	@Autowired
-//    RolesRepository rolesRepository;
+	@Autowired
+    RolesRepository rolesRepository;
 //    @Autowired
 //    UserRepository userRepository;
 //
@@ -36,45 +36,48 @@ class AppleSeasonIdCardHpApplicationTests {
 //        UserEntity user1 = new UserEntity();
 //        PasswordEncoder encoder = new BCryptPasswordEncoder();
 //        user1.setUserName("kush");
-//        user1.setPassword(encoder.encode("kush"));
+//        user1.setPassword(encoder.encode("Demo@123"));
 //        user1.setMobileNumber(9418008559L);
 //        user1.setActive(true);
 //
-////        UserEntity user2 = new UserEntity();
-////        user2.setUserName("Demo2");
-////        user2.setPassword("Demo@123");
+//        Optional<RolesEntity> role = rolesRepository.findById(1);
+//		List<RolesEntity> list = new ArrayList<RolesEntity>();
+//		list.add(role.get());
+//        user1.setRoles(list);
+
+//        UserEntity user2 = new UserEntity();
+//        user2.setUserName("Demo2");
+//        user2.setPassword("Demo@123");
+
+       // userRepository.save(user1);
+       // userRepository.save(user2);
+    //}
+////
+////
+//    @Test
+//    @Transactional
+//    @Rollback(value = false)
+//    void createRoles() {
 //
-//        userRepository.save(user1);
-//       // userRepository.save(user2);
+//        RolesEntity roles = new RolesEntity();
+//        roles.setRoleName("Barrier");
+//        roles.setRoleDescription("Person at Barrier");
+//        roles.setActive(true);
+//
+//
+//
+//        rolesRepository.save(roles);
+//
 //    }
 ////
-////
-////    @Test
-////    @Transactional
-////    @Rollback(value = false)
-////    void createRoles() {
-////
-////        RolesEntity roles = new RolesEntity();
-////        roles.setRoleName("ADMIN");
-////        roles.setRoleDescription("Administrator");
-////
-////        Optional<UserEntity> user = userRepository.findById((long) 4);
-////		List<UserEntity> list = new ArrayList<UserEntity>();
-////		list.add(user.get());
-////        roles.setUsers(list);
-////
-////        rolesRepository.save(roles);
-////
-////    }
-////
-    @Test
-    void bCryptPassword(){
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        encoder.encode("Demo@123");
-        System.out.printf("\n");
-        System.out.printf(encoder.encode("Demo@123"));
-        System.out.printf("\n");
-    }
+//    @Test
+//    void bCryptPassword(){
+//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        encoder.encode("Demo@123");
+//        System.out.printf("\n");
+//        System.out.printf(encoder.encode("Demo@123"));
+//        System.out.printf("\n");
+//    }
 //    
 	
 //  @Test
