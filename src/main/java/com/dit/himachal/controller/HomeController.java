@@ -6,6 +6,7 @@ import com.dit.himachal.entities.RolesEntity;
 import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.form.RegisterUser;
 import com.dit.himachal.form.RolesForm;
+import com.dit.himachal.form.showIdCardList;
 import com.dit.himachal.services.RoleService;
 import com.dit.himachal.services.UserService;
 import com.dit.himachal.validators.RoleValidator;
@@ -138,7 +139,6 @@ public class HomeController {
 
 
 
-    //RolesForm
     @RequestMapping(value = "/createRole", method = RequestMethod.GET)
     public String createRole(Model model) {
         model.addAttribute("rolesForm", new RolesForm());
@@ -169,11 +169,38 @@ public class HomeController {
             model.addAttribute("serverError", ex.toString());
             return  "createrole";
         }
+    }
+
+    @RequestMapping(value = "/showIdCards", method = RequestMethod.GET)
+    public String showIdCardList(Model model) {
+        model.addAttribute("showIdCardList", new showIdCardList());
+        return "showidcards";
+    }
 
 
+    @RequestMapping(value = "/getIdCards", method = RequestMethod.POST)
+    public String getIdCardList(@ModelAttribute("rolesForm") RolesForm roleForm, BindingResult bindingResult, Model model, HttpServletRequest request) {
+        roleValidator.validate(roleForm, bindingResult);
 
-
-
+        if (bindingResult.hasErrors()) {
+            return "createrole";
+        }
+        try {
+            RolesEntity rolesEntity = new RolesEntity();
+            rolesEntity.setActive(true);
+            rolesEntity.setRoleName(roleForm.getRoleName());
+            rolesEntity.setRoleDescription(roleForm.getRoleDescription());
+            RolesEntity savedData = roleService.saveRole(rolesEntity);
+            roleForm.setRoleName("");
+            roleForm.setRoleDescription("");
+            request.getSession().setAttribute("successMessage", savedData.getRoleName() + " role Successfully Saved. ID is" + savedData.getRoleId());
+            return "createrole";
+        } catch (Exception ex) {
+            roleForm.setRoleName("");
+            roleForm.setRoleDescription("");
+            model.addAttribute("serverError", ex.toString());
+            return "createrole";
+        }
     }
 
 

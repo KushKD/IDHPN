@@ -9,6 +9,9 @@
         <script src="${pageContext.request.contextPath}/resources/js/plugins/pace.min.js"></script>
         <!-- Page specific javascripts-->
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/chart.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/select2.min.js"></script>
+            <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/dropzone.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/bootstrap-datepicker.min.js"></script>
         <script type="text/javascript">
           var data = {
           	labels: ["January", "February", "March", "April", "May"],

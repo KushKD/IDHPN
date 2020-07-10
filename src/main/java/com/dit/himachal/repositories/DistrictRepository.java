@@ -15,7 +15,7 @@ public interface DistrictRepository extends CrudRepository<DistrictMaster, Integ
 	
 	
 	 
-	 @Query(value="select * from mst_district where state_id=:stateId", nativeQuery = true)
+	 @Query(value="select * from mst_district where state_id=:stateId AND active=true", nativeQuery = true)
 		List<DistrictMaster> findByStateId(@Param("stateId") int stateId) throws Exception;
 	 
 	

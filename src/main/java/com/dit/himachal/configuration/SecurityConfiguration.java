@@ -82,13 +82,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrfTokenRepository(csrfTokenRepository()).and()
                 .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
         http.csrf().ignoringAntMatchers("/nocsrf", "/api/**");
-        http.csrf().ignoringAntMatchers("/nocsrf", "/ajaxcall/**");
+        http.csrf().ignoringAntMatchers("/nocsrf", "/ajax/**");
         // .anonymous()
         //  .and()
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/api/**").permitAll()
-                .antMatchers("/ajax/getRoles/**").permitAll()
+                .antMatchers("/ajax/**").permitAll()
                // .antMatchers("/api/getotp/**").permitAll()
                 //.antMatchers("/api/verifyotp/**").permitAll()
                 .antMatchers("/downloadFile/**").permitAll()
