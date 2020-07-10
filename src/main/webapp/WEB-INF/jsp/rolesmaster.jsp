@@ -9,6 +9,13 @@
 
         <form:form method="POST" modelAttribute="rolesForm" action="${pageContext.request.contextPath}/saveRole" class="form-signin">
             <h2 class="form-signin-heading">Create Roles</h2>
+             <c:if test="${not empty successMessage}">
+                    <div id="serverError" class="successMessage">${successMessage}</div>
+                </c:if>
+                 <br>
+                <c:if test="${not empty serverError}">
+                    <div id="serverError" class="plErroMessage">${serverError}</div>
+                </c:if>
             <spring:bind path="roleName">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="roleName" class="form-control" placeholder="Role Name"
@@ -26,11 +33,9 @@
 
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <c:remove var="successMessage" scope="session" />
         </form:form>
 
-        <c:if test="${message.message} != null">
-            <div class="msg">test1: ${message.message}</div>
-        </c:if>
 
     </div>
     </main>

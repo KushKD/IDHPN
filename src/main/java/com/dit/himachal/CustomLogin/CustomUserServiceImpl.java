@@ -16,6 +16,7 @@ public class CustomUserServiceImpl implements CustomUserService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RolesRepository roleRepository;
 

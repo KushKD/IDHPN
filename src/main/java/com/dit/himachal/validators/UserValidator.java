@@ -40,6 +40,11 @@ public class UserValidator implements Validator {
         }
 
 
+        if(user.getRoleId().equalsIgnoreCase("0")){
+            errors.rejectValue("roleId", "Select.registerUser.roleId");
+        }
+
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (user.getPassword().length() <= 7 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.registerUser.password");

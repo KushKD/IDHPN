@@ -1,8 +1,7 @@
 <%@ page language="java"
 contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
-<html>
-<head>
+
 <style>
 table td{
 vertical-align:top;
@@ -10,8 +9,7 @@ border:solid 1px #888;
 padding:10px;
 }
 </style>
-</head>
-<body>
+<main class="app-content">
     <h1>Custom  Error Page</h1>
     <table>
         <tr>
@@ -41,5 +39,4 @@ padding:10px;
             </td>
         </tr>
     </table>
-</body>
-</html>
+</main>

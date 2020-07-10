@@ -41,17 +41,13 @@ function getContextPath() {
                   }
 
 //ajaxcall
-                   var json = {
-                         "countryId" : "1"
-                        };
+
                    function getroles() {
-                                             alert("we are heree...");
+
                                              $.ajax({
                                                  type: "GET",
                                                  url:formURL+"/ajax/getRoles",
-                                                 data : {  "id" : 1  },
                                                  success: function (data) {
-                                                     alert(data);
                                                      console.log(data.RESPONSE)
                                                       var selectRole = $('#roles'); // the state select element
                                                              selectRole.find('option').remove();
@@ -62,7 +58,6 @@ function getContextPath() {
 
                                                  },
                                                  error: function(data){
-                                                      alert(data);
                                                       console.log(data)
                                                  }
 
