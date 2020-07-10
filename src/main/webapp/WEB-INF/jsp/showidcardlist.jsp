@@ -7,6 +7,8 @@
          <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/script.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/plugins/pace.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/bootstrap-datepicker.min.js"></script>
+ <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/plugins/dataTables.bootstrap.min.js"></script>
 
 
 
@@ -62,6 +64,50 @@
         </form:form>
 
     </div>
+<c:if test="${not empty vehicledata}">
+<div class="row">
+               <div class="col-md-12">
+                 <div class="tile">
+                   <div class="tile-body">
+                     <div class="table-responsive">
+                       <table class="table table-hover table-bordered" id="sampleTable">
+                         <thead>
+                           <tr>
+                             <th>S.No</th>
+                             <th>Owner Name</th>
+                             <th>Owner Mobile</th>
+                             <th>ID Card Number</th>
+                             <th>Valid From</th>
+                             <th>Valid Upto</th>
+                             <th>Generate Id Card</th>
+                             <th>View Details</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                    <c:forEach items="${vehicledata}" var="vehicledata" varStatus="loopCounter">
+
+                           <tr>
+                             <td><c:out value="${loopCounter.count}"/></td>
+                             <td>${vehicledata.vehicleOwnerName}</td>
+                             <td>${vehicledata.vehicleOwnerMobileNumber}</td>
+                             <td>${vehicledata.idCardNumber}</td>
+                             <td>${vehicledata.isValidFrom}</td>
+                             <td>${vehicledata.isValidUpto}</td>
+                              <td><a class="button button-warning" href="${pageContext.request.contextPath}/generateId/${vehicledata.vehicleOwnerId}" target="blank_" >Generate ID</a></td>
+                            <td><a class="button button-success" href="${pageContext.request.contextPath}/getIdCards/${vehicledata.vehicleOwnerId}">View Details</a></td>
+
+                           </tr>
+
+    </c:forEach>
+     </tbody>
+                               </table>
+                               </div>
+                               </div>
+                               <div>
+                               </div>
+                               </div>
+</c:if>
+
     </main>
 
 
@@ -82,4 +128,13 @@
       getdistricts();
 
   });
+   </script>
+   <script type="text/javascript">
+   $('#sampleTable').DataTable(
+   {
+    dom: 'Bfrtip',
+    buttons: [
+                 'excel', 'pdf'
+            ]
+   });
    </script>

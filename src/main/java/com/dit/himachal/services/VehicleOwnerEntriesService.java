@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.dit.himachal.entities.VehicleOwnerEntries;
 import com.dit.himachal.repositories.VehicleOwnerEntriesRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,4 +52,8 @@ public class VehicleOwnerEntriesService {
 
 	}
 
+	public List<VehicleOwnerEntries> getDataViaDistrictBarrier(Integer districtId, Integer BarrierId, String date) {
+		return  vehicleOwnerEntriesRepository.getDataviaDistrictBarrierDate(districtId,BarrierId,date);
+
+	}
 }

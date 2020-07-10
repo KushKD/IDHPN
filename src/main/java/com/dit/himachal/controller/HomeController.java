@@ -4,15 +4,26 @@ import com.dit.himachal.CustomLogin.CustomUserService;
 import com.dit.himachal.CustomLogin.SecurityService;
 import com.dit.himachal.entities.RolesEntity;
 import com.dit.himachal.entities.UserEntity;
+import com.dit.himachal.entities.VehicleOwnerEntries;
 import com.dit.himachal.form.RegisterUser;
 import com.dit.himachal.form.RolesForm;
 import com.dit.himachal.form.showIdCardList;
 import com.dit.himachal.services.RoleService;
 import com.dit.himachal.services.UserService;
+import com.dit.himachal.services.VehicleOwnerEntriesService;
+import com.dit.himachal.utilities.GeneratePdfReport;
+import com.dit.himachal.utilities.Utilities;
+import com.dit.himachal.validators.GenerateIdCardValidator;
 import com.dit.himachal.validators.RoleValidator;
 import com.dit.himachal.validators.UserValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.qrcode.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +39,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -40,6 +53,9 @@ public class HomeController {
     private RoleValidator roleValidator;
 
     @Autowired
+    private GenerateIdCardValidator generateIdCardValidator;
+
+    @Autowired
     private CustomUserService userService;
 
     @Autowired
@@ -50,6 +66,9 @@ public class HomeController {
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private VehicleOwnerEntriesService vehicleOwnerEntriesService;
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -75,7 +94,7 @@ public class HomeController {
     public String index(Model model) {
         System.out.println("We are here");
 
-        return "index";
+        return "login";
     }
 
 
@@ -179,29 +198,62 @@ public class HomeController {
 
 
     @RequestMapping(value = "/getIdCards", method = RequestMethod.POST)
-    public String getIdCardList(@ModelAttribute("rolesForm") RolesForm roleForm, BindingResult bindingResult, Model model, HttpServletRequest request) {
-        roleValidator.validate(roleForm, bindingResult);
+    public String getIdCardList(@ModelAttribute("showIdCardList") showIdCardList idcard, BindingResult bindingResult, Model model, HttpServletRequest request) {
+        generateIdCardValidator.validate(idcard, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "createrole";
+            return "showidcards";
         }
         try {
-            RolesEntity rolesEntity = new RolesEntity();
-            rolesEntity.setActive(true);
-            rolesEntity.setRoleName(roleForm.getRoleName());
-            rolesEntity.setRoleDescription(roleForm.getRoleDescription());
-            RolesEntity savedData = roleService.saveRole(rolesEntity);
-            roleForm.setRoleName("");
-            roleForm.setRoleDescription("");
-            request.getSession().setAttribute("successMessage", savedData.getRoleName() + " role Successfully Saved. ID is" + savedData.getRoleId());
-            return "createrole";
+            List<VehicleOwnerEntries> data = vehicleOwnerEntriesService.getDataViaDistrictBarrier(Integer.parseInt(idcard.getDistrict_id()) ,
+                    Integer.parseInt(idcard.getBarrier_id()),idcard.getDate().trim());
+            if(!data.isEmpty()){
+                request.getSession().setAttribute("successMessage", "Data found Successfully");
+                model.addAttribute("vehicledata",data);
+                idcard.setDate(idcard.getDate());
+                idcard.setBarrier_id(idcard.getBarrier_id());
+                idcard.setDistrict_id(idcard.getDistrict_id());
+                return "showidcards";
+            }else{
+                idcard.setDate(idcard.getDate());
+                idcard.setBarrier_id(idcard.getBarrier_id());
+                idcard.setDistrict_id(idcard.getDistrict_id());
+                model.addAttribute("serverError", "No Data available for the current District and Barrier");
+                return "showidcards";
+            }
+
+
         } catch (Exception ex) {
-            roleForm.setRoleName("");
-            roleForm.setRoleDescription("");
+            idcard.setDate("");
+            idcard.setBarrier_id("0");
+            idcard.setDistrict_id("0");
             model.addAttribute("serverError", ex.toString());
-            return "createrole";
+            return "showidcards";
         }
+
     }
+
+
+
+    @RequestMapping(value="/generateId/{id}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_PDF_VALUE)
+    public @ResponseBody ResponseEntity<InputStreamResource> printId(@PathVariable("id") String id) throws IOException, WriterException, DocumentException {
+
+        Optional<VehicleOwnerEntries> vehicleOwnerEntries = vehicleOwnerEntriesService.getOwnerDetails(Long.valueOf(id));
+            ByteArrayInputStream bis = GeneratePdfReport.generateIdCard(vehicleOwnerEntries.get());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "inline; filename=" + vehicleOwnerEntries.get().getIdCardNumber() + ".pdf");
+
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(new InputStreamResource(bis));
+
+    }
+
+
 
 
 
