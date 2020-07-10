@@ -56,4 +56,6 @@ public class VehicleOwnerEntriesService {
 		return  vehicleOwnerEntriesRepository.getDataviaDistrictBarrierDate(districtId,BarrierId,date);
 
 	}
+
+
 }

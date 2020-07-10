@@ -1,14 +1,10 @@
 package com.dit.himachal.entities;
 
+import org.apache.tomcat.jni.Library;
+
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mst_barrier")
@@ -33,6 +29,8 @@ public class BarrierMaster implements Serializable {
 
 	@Column(name = "active")
 	private boolean active;
+
+
 
 	public Integer getBarrierId() {
 		return barrierId;
@@ -66,16 +64,15 @@ public class BarrierMaster implements Serializable {
 		this.active = active;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "BarrierMaster [barrierId=" + barrierId + ", barrierName=" + barrierName + ", districtId=" + districtId
-				+ ", active=" + active + "]";
+		return "BarrierMaster{" +
+				"barrierId=" + barrierId +
+				", barrierName='" + barrierName + '\'' +
+				", districtId=" + districtId +
+				", active=" + active +
+				'}';
 	}
-
-	
-	
-	
-	
-	
-
 }

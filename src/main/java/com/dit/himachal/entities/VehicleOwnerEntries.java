@@ -3,13 +3,7 @@ package com.dit.himachal.entities;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mst_vehicle_owner_entries")
@@ -85,6 +79,58 @@ public class VehicleOwnerEntries implements Serializable {
 	
 	@Column(name = "id_generated")
 	private boolean isGenerated;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "barrier_id" , insertable = false, updatable = false)
+	private BarrierMaster barriermaster;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "district_id" , insertable = false, updatable = false)
+	private DistrictMaster districtMaster;
+
+
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "vehicle_type_id" , insertable = false, updatable = false)
+	private VehicleTypeMaster vehicleType;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "vehicle_owner_type_id" , insertable = false, updatable = false)
+	private VehicleUserType vehicleUser;
+
+
+
+	public VehicleTypeMaster getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(VehicleTypeMaster vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	public VehicleUserType getVehicleUser() {
+		return vehicleUser;
+	}
+
+	public void setVehicleUser(VehicleUserType vehicleUser) {
+		this.vehicleUser = vehicleUser;
+	}
+
+	public DistrictMaster getDistrictMaster() {
+		return districtMaster;
+	}
+
+	public void setDistrictMaster(DistrictMaster districtMaster) {
+		this.districtMaster = districtMaster;
+	}
+
+	public BarrierMaster getBarriermaster() {
+		return barriermaster;
+	}
+
+	public void setBarriermaster(BarrierMaster barriermaster) {
+		this.barriermaster = barriermaster;
+	}
 
 	public Long getVehicleOwnerId() {
 		return vehicleOwnerId;
@@ -258,26 +304,33 @@ public class VehicleOwnerEntries implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VehicleOwnerEntries [vehicleOwnerId=" + vehicleOwnerId + ", idCardNumber=" + idCardNumber
-				+ ", vehicleDistrictId=" + vehicleDistrictId + ", vehicleBarrierId=" + vehicleBarrierId
-				+ ", vehicleTypeId=" + vehicleTypeId + ", vehicleOwnerTypeId=" + vehicleOwnerTypeId
-				+ ", vehicleOwnerName=" + vehicleOwnerName + ", vehicleOwnerImageName=" + vehicleOwnerImageName
-				+ ", vehicleOwnerMobileNumber=" + vehicleOwnerMobileNumber + ", isValidFrom=" + isValidFrom
-				+ ", isValidUpto=" + isValidUpto + ", vehicleOwnerAadhaarNumber=" + vehicleOwnerAadhaarNumber
-				+ ", vehicleOwnerVehicleNumber=" + vehicleOwnerVehicleNumber + ", vehicleOwnerChassisNumber="
-				+ vehicleOwnerChassisNumber + ", vehicleOwnerEngineNumber=" + vehicleOwnerEngineNumber
-				+ ", vehicleOwnerDrivingLicence=" + vehicleOwnerDrivingLicence + ", mobileInformation="
-				+ mobileInformation + ", otherInformation=" + otherInformation + ", dataEnteredBy=" + dataEnteredBy
-				+ ", active=" + active + ", isGenerated=" + isGenerated + "]";
+		return "VehicleOwnerEntries{" +
+				"vehicleOwnerId=" + vehicleOwnerId +
+				", idCardNumber='" + idCardNumber + '\'' +
+				", vehicleDistrictId=" + vehicleDistrictId +
+				", vehicleBarrierId=" + vehicleBarrierId +
+				", vehicleTypeId=" + vehicleTypeId +
+				", vehicleOwnerTypeId=" + vehicleOwnerTypeId +
+				", vehicleOwnerName='" + vehicleOwnerName + '\'' +
+				", vehicleOwnerImageName='" + vehicleOwnerImageName + '\'' +
+				", vehicleOwnerMobileNumber=" + vehicleOwnerMobileNumber +
+				", isValidFrom='" + isValidFrom + '\'' +
+				", isValidUpto='" + isValidUpto + '\'' +
+				", vehicleOwnerAadhaarNumber='" + vehicleOwnerAadhaarNumber + '\'' +
+				", vehicleOwnerVehicleNumber='" + vehicleOwnerVehicleNumber + '\'' +
+				", vehicleOwnerChassisNumber='" + vehicleOwnerChassisNumber + '\'' +
+				", vehicleOwnerEngineNumber='" + vehicleOwnerEngineNumber + '\'' +
+				", vehicleOwnerDrivingLicence='" + vehicleOwnerDrivingLicence + '\'' +
+				", mobileInformation='" + mobileInformation + '\'' +
+				", otherInformation='" + otherInformation + '\'' +
+				", dataEnteredBy=" + dataEnteredBy +
+				", active=" + active +
+				", isGenerated=" + isGenerated +
+				", barriermaster=" + barriermaster +
+				", districtMaster=" + districtMaster +
+				//", user=" + user +
+				", vehicleType=" + vehicleType +
+				", vehicleUser=" + vehicleUser +
+				'}';
 	}
-
-	
-	
-	
-
-
-	
-	
-	
-
 }

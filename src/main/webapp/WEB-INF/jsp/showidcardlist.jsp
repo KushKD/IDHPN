@@ -94,7 +94,7 @@
                              <td>${vehicledata.isValidFrom}</td>
                              <td>${vehicledata.isValidUpto}</td>
                               <td><a class="button button-warning" href="${pageContext.request.contextPath}/generateId/${vehicledata.vehicleOwnerId}" target="blank_" >Generate ID</a></td>
-                            <td><a class="button button-success" href="${pageContext.request.contextPath}/getIdCards/${vehicledata.vehicleOwnerId}">View Details</a></td>
+                            <td><a href="#" class="button button-success" onclick="getData('${vehicledata.vehicleOwnerId}')";>View Details</a></td>
 
                            </tr>
 

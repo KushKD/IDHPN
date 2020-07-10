@@ -111,3 +111,19 @@ function loadBarriers(id) {
 
 
 }
+
+function getData(id){
+$.ajax({
+		type: "GET",
+		url: formURL + "/ajax/getVehicleOwnerData",
+		data: { "id": id },
+		success: function (data) {
+			console.log(data.RESPONSE);
+
+		},
+		error: function (data) {
+			console.log(data)
+		}
+
+	});
+}
