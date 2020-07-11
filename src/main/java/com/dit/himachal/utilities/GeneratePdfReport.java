@@ -196,17 +196,17 @@ public class GeneratePdfReport {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase("Created Date:"));
-            cell.setColspan(2);
-            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(cell);
-
-            cell = new PdfPCell(new Phrase(String.valueOf(vehicleOwnerEntries.getCreatedDate()),boldFont2));
-            cell.setColspan(2);
-            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(cell);
+//            cell = new PdfPCell(new Phrase("Created Date:"));
+//            cell.setColspan(2);
+//            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//            table.addCell(cell);
+//
+//            cell = new PdfPCell(new Phrase(String.valueOf(vehicleOwnerEntries.getCreatedDate()),boldFont2));
+//            cell.setColspan(2);
+//            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//            table.addCell(cell);
 
             cell = new PdfPCell(new Phrase("If found Please handover to Shimla Police"));
             cell.setColspan(4);

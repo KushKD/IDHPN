@@ -122,6 +122,7 @@ function getData(id) {
             "id": id
         },
         success: function(data) {
+        console.log(data.RESPONSE);
             var html = "";
             html += "<div class='row' >";
 
@@ -134,7 +135,7 @@ function getData(id) {
             html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE.vehicleOwnerMobileNumber + "</label> </div>";
 
             html += "<div class='col-md-3 form-group'  >";
-            html += " <img class='img-responsive img-thumbnail' style='width:100px; height:100px;' src='" + window.location.protocol + "//" + window.location.hostname + "/downloadfile/" + data.RESPONSE.vehicleOwnerImageName + "'></img> </div>";
+            html += " <img class='img-responsive img-thumbnail' style='width:100px; height:100px;' src='" + window.location.protocol + "//" + window.location.hostname + "/downloadFile/" + data.RESPONSE.vehicleOwnerImageName + "'></img> </div>";
             html += "</div>";
             html += "<div class='row' >";
             html += "<div class='col-md-4 form-group'  >";
@@ -160,8 +161,8 @@ function getData(id) {
 
 
             html += "<div class='col-md-4 form-group'  >";
-            html += " <label class='control-label' style='font-weight: bold;'> ID Created on:  </label>";
-            html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE.createdDate + "</label> </div>";
+            html += " <label class='control-label' style='font-weight: bold;'> Vehicle Number:  </label>";
+            html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE.vehicleOwnerVehicleNumber + "</label> </div>";
 
             html += "<div class='col-md-4 form-group'  >";
             html += " <label class='control-label' style='font-weight: bold;'>Driving Licence Number</label>";

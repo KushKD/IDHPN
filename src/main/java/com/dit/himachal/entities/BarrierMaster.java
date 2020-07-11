@@ -3,6 +3,7 @@ package com.dit.himachal.entities;
 import org.apache.tomcat.jni.Library;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -63,7 +64,6 @@ public class BarrierMaster implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
 
 
 	@Override

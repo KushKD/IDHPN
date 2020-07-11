@@ -97,7 +97,7 @@ public class API {
 
 
             //Generate ID CARD NUMBER  HP/BARRIERID/Number
-            vehicleUSerEntries.setIdCardNumber("REGD.NO/HP/" + barrierService.getBarrierName(vehicleUSerEntries.getVehicleBarrierId()) + "/" + entriesService.getIdCardNumberSequence());
+            vehicleUSerEntries.setIdCardNumber("REGD.NO/HP/" + barrierService.getBarrierName(vehicleUSerEntries.getBarriermaster().getBarrierId()) + "/" + entriesService.getIdCardNumberSequence());
             vehicleUSerEntries.setVehicleOwnerImageName(fileName);
 
             vehicleUSerEntries.setMobileInformation("");

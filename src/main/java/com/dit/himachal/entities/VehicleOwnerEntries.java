@@ -23,18 +23,6 @@ public class VehicleOwnerEntries implements Serializable {
 	@Column(name = "id_card_number")
 	private String idCardNumber;
 	
-	@Column(name = "district_id")
-	private Integer vehicleDistrictId;
-	
-	@Column(name = "barrier_id")
-	private Integer vehicleBarrierId;
-	
-	@Column(name = "vehicle_type_id")
-	private Integer vehicleTypeId;
-
-	@Column(name = "vehicle_owner_type_id")
-	private Integer vehicleOwnerTypeId;
-	
 	@Column(name = "vehicle_owner_name")
 	private String vehicleOwnerName;
 	
@@ -80,67 +68,26 @@ public class VehicleOwnerEntries implements Serializable {
 	@Column(name = "id_generated")
 	private boolean isGenerated;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "barrier_id" , insertable = false, updatable = false)
+	@OneToOne
+	@JoinColumn(name="barrier_id")
 	private BarrierMaster barriermaster;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "district_id" , insertable = false, updatable = false)
+	@OneToOne
+	@JoinColumn(name="district_id")
 	private DistrictMaster districtMaster;
 
-
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "vehicle_type_id" , insertable = false, updatable = false)
+	@OneToOne
+	@JoinColumn(name = "vehicle_type_id")
 	private VehicleTypeMaster vehicleType;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "vehicle_owner_type_id" , insertable = false, updatable = false)
+	@OneToOne
+	@JoinColumn(name = "vehicle_owner_type_id")
 	private VehicleUserType vehicleUser;
 
-	@Column(name = "createddate")
-	private Date createdDate;
 
+//	@Column(name = "createddate")
+//	private Date createdDate;
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public VehicleTypeMaster getVehicleType() {
-		return vehicleType;
-	}
-
-	public void setVehicleType(VehicleTypeMaster vehicleType) {
-		this.vehicleType = vehicleType;
-	}
-
-	public VehicleUserType getVehicleUser() {
-		return vehicleUser;
-	}
-
-	public void setVehicleUser(VehicleUserType vehicleUser) {
-		this.vehicleUser = vehicleUser;
-	}
-
-	public DistrictMaster getDistrictMaster() {
-		return districtMaster;
-	}
-
-	public void setDistrictMaster(DistrictMaster districtMaster) {
-		this.districtMaster = districtMaster;
-	}
-
-	public BarrierMaster getBarriermaster() {
-		return barriermaster;
-	}
-
-	public void setBarriermaster(BarrierMaster barriermaster) {
-		this.barriermaster = barriermaster;
-	}
 
 	public Long getVehicleOwnerId() {
 		return vehicleOwnerId;
@@ -156,38 +103,6 @@ public class VehicleOwnerEntries implements Serializable {
 
 	public void setIdCardNumber(String idCardNumber) {
 		this.idCardNumber = idCardNumber;
-	}
-
-	public Integer getVehicleDistrictId() {
-		return vehicleDistrictId;
-	}
-
-	public void setVehicleDistrictId(Integer vehicleDistrictId) {
-		this.vehicleDistrictId = vehicleDistrictId;
-	}
-
-	public Integer getVehicleBarrierId() {
-		return vehicleBarrierId;
-	}
-
-	public void setVehicleBarrierId(Integer vehicleBarrierId) {
-		this.vehicleBarrierId = vehicleBarrierId;
-	}
-
-	public Integer getVehicleTypeId() {
-		return vehicleTypeId;
-	}
-
-	public void setVehicleTypeId(Integer vehicleTypeId) {
-		this.vehicleTypeId = vehicleTypeId;
-	}
-
-	public Integer getVehicleOwnerTypeId() {
-		return vehicleOwnerTypeId;
-	}
-
-	public void setVehicleOwnerTypeId(Integer vehicleOwnerTypeId) {
-		this.vehicleOwnerTypeId = vehicleOwnerTypeId;
 	}
 
 	public String getVehicleOwnerName() {
@@ -302,25 +217,59 @@ public class VehicleOwnerEntries implements Serializable {
 		this.active = active;
 	}
 
-	
-	
 	public boolean isGenerated() {
 		return isGenerated;
 	}
 
-	public void setGenerated(boolean isGenerated) {
-		this.isGenerated = isGenerated;
+	public void setGenerated(boolean generated) {
+		isGenerated = generated;
 	}
+
+	public BarrierMaster getBarriermaster() {
+		return barriermaster;
+	}
+
+	public void setBarriermaster(BarrierMaster barriermaster) {
+		this.barriermaster = barriermaster;
+	}
+
+	public DistrictMaster getDistrictMaster() {
+		return districtMaster;
+	}
+
+	public void setDistrictMaster(DistrictMaster districtMaster) {
+		this.districtMaster = districtMaster;
+	}
+
+	public VehicleTypeMaster getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(VehicleTypeMaster vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	public VehicleUserType getVehicleUser() {
+		return vehicleUser;
+	}
+
+	public void setVehicleUser(VehicleUserType vehicleUser) {
+		this.vehicleUser = vehicleUser;
+	}
+
+//	public Date getCreatedDate() {
+//		return createdDate;
+//	}
+//
+//	public void setCreatedDate(Date createdDate) {
+//		this.createdDate = createdDate;
+//	}
 
 	@Override
 	public String toString() {
 		return "VehicleOwnerEntries{" +
 				"vehicleOwnerId=" + vehicleOwnerId +
 				", idCardNumber='" + idCardNumber + '\'' +
-				", vehicleDistrictId=" + vehicleDistrictId +
-				", vehicleBarrierId=" + vehicleBarrierId +
-				", vehicleTypeId=" + vehicleTypeId +
-				", vehicleOwnerTypeId=" + vehicleOwnerTypeId +
 				", vehicleOwnerName='" + vehicleOwnerName + '\'' +
 				", vehicleOwnerImageName='" + vehicleOwnerImageName + '\'' +
 				", vehicleOwnerMobileNumber=" + vehicleOwnerMobileNumber +
@@ -340,7 +289,7 @@ public class VehicleOwnerEntries implements Serializable {
 				", districtMaster=" + districtMaster +
 				", vehicleType=" + vehicleType +
 				", vehicleUser=" + vehicleUser +
-				", createdDate=" + createdDate +
+//				", createdDate=" + createdDate +
 				'}';
 	}
 }

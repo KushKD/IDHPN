@@ -1,14 +1,9 @@
 package com.dit.himachal.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mst_district")
@@ -35,6 +30,8 @@ public class DistrictMaster implements Serializable {
 
 	@Column(name = "active")
 	private boolean active;
+
+
 
 	public Integer getDistrictId() {
 		return districtId;
@@ -70,14 +67,11 @@ public class DistrictMaster implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DistrictMaster [districtId=" + districtId + ", districtName=" + districtName + ", stateId=" + stateId
-				+ ", active=" + active + "]";
+		return "DistrictMaster{" +
+				"districtId=" + districtId +
+				", districtName='" + districtName + '\'' +
+				", stateId=" + stateId +
+				", active=" + active +
+				'}';
 	}
-	
-	
-
-
-	
-	
-
 }
