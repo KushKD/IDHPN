@@ -98,7 +98,17 @@ public class VehicleOwnerEntries implements Serializable {
 	@JoinColumn(name = "vehicle_owner_type_id" , insertable = false, updatable = false)
 	private VehicleUserType vehicleUser;
 
+	@Column(name = "createddate")
+	private Date createdDate;
 
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
 	public VehicleTypeMaster getVehicleType() {
 		return vehicleType;
@@ -328,9 +338,9 @@ public class VehicleOwnerEntries implements Serializable {
 				", isGenerated=" + isGenerated +
 				", barriermaster=" + barriermaster +
 				", districtMaster=" + districtMaster +
-				//", user=" + user +
 				", vehicleType=" + vehicleType +
 				", vehicleUser=" + vehicleUser +
+				", createdDate=" + createdDate +
 				'}';
 	}
 }

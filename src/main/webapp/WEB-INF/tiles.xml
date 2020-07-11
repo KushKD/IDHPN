@@ -48,6 +48,10 @@
     </definition>
 
 
+    <definition name="searchid" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/searchIdcard.jsp" />
+    </definition>
+
 
 
 

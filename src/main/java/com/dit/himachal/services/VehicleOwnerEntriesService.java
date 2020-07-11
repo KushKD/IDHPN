@@ -52,6 +52,12 @@ public class VehicleOwnerEntriesService {
 
 	}
 
+	public List<VehicleOwnerEntries> searchIdentityList(Long mobile, String vehicle_number) {
+
+		return  vehicleOwnerEntriesRepository.SeachIDCArdList(mobile,vehicle_number);
+
+	}
+
 	public List<VehicleOwnerEntries> getDataViaDistrictBarrier(Integer districtId, Integer BarrierId, String date) {
 		return  vehicleOwnerEntriesRepository.getDataviaDistrictBarrierDate(districtId,BarrierId,date);
 

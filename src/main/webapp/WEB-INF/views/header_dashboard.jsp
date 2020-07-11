@@ -58,6 +58,9 @@
         </sec:authorize>
         <li><a class="app-menu__item" href="${pageContext.request.contextPath}/showIdCards"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">ID Card List</span></a></li>
 
+          <li><a class="app-menu__item" href="${pageContext.request.contextPath}/searchId"><i class="app-menu__icon fa fa-search"></i><span class="app-menu__label">Search Id Card</span></a></li>
+
+
       </ul>
     </aside>
 

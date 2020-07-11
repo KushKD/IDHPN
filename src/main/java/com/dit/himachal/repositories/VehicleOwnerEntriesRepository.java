@@ -20,8 +20,11 @@ public interface VehicleOwnerEntriesRepository extends CrudRepository<VehicleOwn
                                                 @Param("mobile_number") Long mobile_number,
                                                 @Param("vehicle_number") String vehicle_number);
 
-    @Query(value="select * from public.mst_vehicle_owner_entries where  vehicle_owner_mobile_number=:mobile_number AND vehicle_owner_vehicle_number=:vehicle_number", nativeQuery = true)
+    @Query(value="select * from public.mst_vehicle_owner_entries where  vehicle_owner_mobile_number=:mobile_number AND vehicle_owner_vehicle_number=:vehicle_number order by createddate desc", nativeQuery = true)
     VehicleOwnerEntries SeachIDCArd(@Param("mobile_number") Long mobile_number, @Param("vehicle_number") String vehicle_number);
+
+    @Query(value="select * from public.mst_vehicle_owner_entries where  vehicle_owner_mobile_number=:mobile_number AND vehicle_owner_vehicle_number=:vehicle_number order by createddate desc", nativeQuery = true)
+    List<VehicleOwnerEntries> SeachIDCArdList(@Param("mobile_number") Long mobile_number, @Param("vehicle_number") String vehicle_number);
 
 
     @Query(value="select * from public.mst_vehicle_owner_entries where  district_id=:districtId AND barrier_id=:barrierId AND to_char(createddate, 'DD/MM/YYYY') = :selectedDate order by createddate desc", nativeQuery = true)

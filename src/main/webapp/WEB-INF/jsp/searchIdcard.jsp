@@ -36,8 +36,8 @@
 
    <!-- Modal Pop Up Closed -->
 
-        <form:form method="POST" modelAttribute="showIdCardList" action="${pageContext.request.contextPath}/getIdCards" class="form-signin">
-            <h2 class="form-signin-heading">Generate ID Card List</h2>
+        <form:form method="POST" modelAttribute="searchId" action="${pageContext.request.contextPath}/getIdCardsSearch" class="form-signin">
+            <h2 class="form-signin-heading">Search ID Card </h2>
               <c:if test="${not empty successMessage}">
                                 <div id="serverError" class="successMessage">${successMessage}</div>
                             </c:if>
@@ -48,35 +48,25 @@
 
 
                         <div class="row">
-                         <spring:bind path="district_id">
+                         <spring:bind path="vehicleNumber">
                           <div class="col-md-4 form-group  ${status.error ? 'has-error' : ''}">
-                           <form:label path="district_id" for="roles">District</form:label>
-                            <form:select path="district_id" name="district_id" class="form-control" id="districts" onchange="getBarriers(this.value)">
 
-                              </form:select>
-                              <form:errors  path="district_id"></form:errors>
+                            <form:input path="vehicleNumber" name="vehicleNumber" class="form-control" type="text" placeholder="Enter Vehicle Number" />
+                              <form:errors  path="vehicleNumber"></form:errors>
                             </div>
                              </spring:bind>
 
 
-                          <spring:bind path="barrier_id">
+                          <spring:bind path="mobileNumber">
                           <div class="col-md-4 form-group  ${status.error ? 'has-error' : ''}">
-                           <form:label path="barrier_id" for="roles"> Barrier</form:label>
-                            <form:select path="barrier_id" name="barrier_id" class="form-control" id="barriers" >
 
-                              </form:select>
-                              <form:errors  path="barrier_id"></form:errors>
+                            <form:input path="mobileNumber" name="mobileNumber" class="form-control" type="text" placeholder="Enter Mobile Number" required="required"  />
+
+                              <form:errors  path="mobileNumber"></form:errors>
                             </div>
                              </spring:bind>
 
-                             <spring:bind path="date">
-                                                       <div class="col-md-4 form-group  ${status.error ? 'has-error' : ''}">
-                                                        <form:label path="date" >Select Date</form:label>
 
-                               <form:input class="form-control" path="date" id="demoDate" type="text" placeholder="Select Date" />
-                                                           <form:errors  path="date"></form:errors>
-                                                         </div>
-                                                          </spring:bind>
 
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>

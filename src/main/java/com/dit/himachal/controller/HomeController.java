@@ -7,6 +7,7 @@ import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.entities.VehicleOwnerEntries;
 import com.dit.himachal.form.RegisterUser;
 import com.dit.himachal.form.RolesForm;
+import com.dit.himachal.form.SearchID;
 import com.dit.himachal.form.showIdCardList;
 import com.dit.himachal.services.RoleService;
 import com.dit.himachal.services.UserService;
@@ -15,6 +16,7 @@ import com.dit.himachal.utilities.GeneratePdfReport;
 import com.dit.himachal.utilities.Utilities;
 import com.dit.himachal.validators.GenerateIdCardValidator;
 import com.dit.himachal.validators.RoleValidator;
+import com.dit.himachal.validators.SearchIdCardValidator;
 import com.dit.himachal.validators.UserValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.itextpdf.text.DocumentException;
@@ -69,6 +71,9 @@ public class HomeController {
 
     @Autowired
     private VehicleOwnerEntriesService vehicleOwnerEntriesService;
+
+    @Autowired
+    private SearchIdCardValidator searchIdCardValidator;
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -194,6 +199,45 @@ public class HomeController {
     public String showIdCardList(Model model) {
         model.addAttribute("showIdCardList", new showIdCardList());
         return "showidcards";
+    }
+
+    @RequestMapping(value = "/searchId", method = RequestMethod.GET)
+    public String searchIdCard(Model model) {
+        model.addAttribute("searchId", new SearchID());
+        return "searchid";
+    }
+
+    @RequestMapping(value = "/getIdCardsSearch", method = RequestMethod.POST)
+    public String getIdCardListSearch(@ModelAttribute("searchId") SearchID idcard, BindingResult bindingResult, Model model, HttpServletRequest request) {
+        searchIdCardValidator.validate(idcard, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "searchid";
+        }
+        try {
+            List<VehicleOwnerEntries> data = vehicleOwnerEntriesService.searchIdentityList(Long.valueOf(idcard.getMobileNumber()),idcard.getVehicleNumber());
+
+            if(!data.isEmpty()){
+                request.getSession().setAttribute("successMessage", "Data found Successfully");
+                model.addAttribute("vehicledata",data);
+                idcard.setMobileNumber(idcard.getMobileNumber());
+                idcard.setVehicleNumber(idcard.getVehicleNumber());
+                return "searchid";
+            }else{
+                idcard.setMobileNumber("");
+                idcard.setVehicleNumber("");
+                model.addAttribute("serverError", "No Data available for the current Vehicle Number and Mobile Number");
+                return "searchid";
+            }
+
+
+        } catch (Exception ex) {
+            idcard.setMobileNumber("");
+            idcard.setVehicleNumber("");
+            model.addAttribute("serverError", ex.toString());
+            return "searchid";
+        }
+
     }
 
 
