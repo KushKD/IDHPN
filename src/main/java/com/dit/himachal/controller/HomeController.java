@@ -2,6 +2,7 @@ package com.dit.himachal.controller;
 
 import com.dit.himachal.CustomLogin.CustomUserService;
 import com.dit.himachal.CustomLogin.SecurityService;
+import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.RolesEntity;
 import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.entities.VehicleOwnerEntries;
@@ -21,6 +22,8 @@ import com.dit.himachal.validators.UserValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.qrcode.WriterException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -74,6 +77,8 @@ public class HomeController {
 
     @Autowired
     private SearchIdCardValidator searchIdCardValidator;
+
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)

@@ -1,5 +1,8 @@
 package com.dit.himachal.configuration;
 
+import com.dit.himachal.apicontroller.API;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -10,6 +13,8 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 public class TilesConfiguration {
+
+    private static final Logger logger = LoggerFactory.getLogger(TilesConfiguration.class);
 
     @Bean
     public ViewResolver getViewResolver() {

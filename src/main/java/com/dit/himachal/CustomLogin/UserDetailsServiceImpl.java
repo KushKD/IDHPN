@@ -1,8 +1,11 @@
 package com.dit.himachal.CustomLogin;
 
+import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.RolesEntity;
 import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +22,8 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Override
     @Transactional

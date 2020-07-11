@@ -1,6 +1,7 @@
 package com.dit.himachal.ajax;
 
 import com.dit.himachal.ModalInterfaces.RoleIdName;
+import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.BarrierMaster;
 import com.dit.himachal.entities.DistrictMaster;
 import com.dit.himachal.entities.RolesEntity;
@@ -11,10 +12,13 @@ import com.dit.himachal.services.BarrierService;
 import com.dit.himachal.services.DistrictService;
 import com.dit.himachal.services.VehicleOwnerEntriesService;
 import com.dit.himachal.utilities.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.xml.AbstractJaxb2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +42,8 @@ public class AjaxContoller {
     @Autowired
     VehicleOwnerEntriesService vehicleOwnerEntriesService;
 
+    private static final Logger logger = LoggerFactory.getLogger(AjaxContoller.class);
+
 
     @RequestMapping(value = "/ajax/getRoles", method = RequestMethod.GET,  produces="application/json")
     public @ResponseBody
@@ -51,8 +57,6 @@ public class AjaxContoller {
             RolesModal pojo = new RolesModal();
             pojo.setRole_id((Integer) result[0]);
             pojo.setRole_name((String) result[1]);
-            System.out.println(
-                    "ID: " + result[0] + ", Role: " + result[1]);
             modelRole.add(pojo);
         }
 
@@ -81,7 +85,6 @@ public class AjaxContoller {
 
     }
 
-    //getBarriers
     @RequestMapping(value = "/ajax/getBarriers", method = RequestMethod.GET,  produces="application/json")
     public @ResponseBody
     ResponseEntity<?> getBarriers(@RequestParam(value = "id", required = true) String id) throws Exception {

@@ -1,5 +1,6 @@
 package com.dit.himachal.utilities;
 
+import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.VehicleOwnerEntries;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import com.itextpdf.text.pdf.BarcodeQRCode;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
@@ -22,7 +24,7 @@ import java.util.logging.Logger;
 public class GeneratePdfReport {
 
     //mvn package
-
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(GeneratePdfReport.class);
 
 
     public static ByteArrayInputStream generateIdCard(VehicleOwnerEntries data) throws JsonProcessingException {
@@ -37,8 +39,8 @@ public class GeneratePdfReport {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-        Font boldFont2 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
+        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+        Font boldFont2 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
         try {
 
@@ -170,26 +172,37 @@ public class GeneratePdfReport {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-
-            cell = new PdfPCell(new Phrase("Place:"));
+            cell = new PdfPCell(new Phrase("Created at District:"));
             cell.setColspan(2);
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(String.valueOf(vehicleOwnerEntries.getVehicleBarrierId()),boldFont2));
+            cell = new PdfPCell(new Phrase(String.valueOf(vehicleOwnerEntries.getDistrictMaster().getDistrictName()),boldFont2));
             cell.setColspan(2);
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase("Date:"));
+            cell = new PdfPCell(new Phrase("Created at Barrier:"));
             cell.setColspan(2);
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-            cell = new PdfPCell(new Phrase(vehicleOwnerEntries.getIsValidFrom(),boldFont2));
+            cell = new PdfPCell(new Phrase(String.valueOf(vehicleOwnerEntries.getBarriermaster().getBarrierName()),boldFont2));
+            cell.setColspan(2);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+
+            cell = new PdfPCell(new Phrase("Created Date:"));
+            cell.setColspan(2);
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+
+            cell = new PdfPCell(new Phrase(String.valueOf(vehicleOwnerEntries.getCreatedDate()),boldFont2));
             cell.setColspan(2);
             cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);

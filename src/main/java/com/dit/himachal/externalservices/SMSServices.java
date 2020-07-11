@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.net.ssl.SSLContext;
+
+import com.dit.himachal.apicontroller.API;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -22,6 +24,8 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -39,6 +43,8 @@ import javax.net.ssl.X509TrustManager;
  * @see <a href="https://mgov.gov.in/doc/RequiredJars.zip">Download required Jar files</a>
  */
 public class SMSServices {
+
+	private static final Logger logger = LoggerFactory.getLogger(SMSServices.class);
 
 	/**
 	 * Send Single text SMS

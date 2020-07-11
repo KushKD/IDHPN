@@ -1,8 +1,11 @@
 package com.dit.himachal.CustomLogin;
 
+import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.repositories.RolesRepository;
 import com.dit.himachal.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +31,7 @@ public class CustomUserServiceImpl implements CustomUserService {
         return new BCryptPasswordEncoder();
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserServiceImpl.class);
 
     @Override
     public void save(UserEntity user) {

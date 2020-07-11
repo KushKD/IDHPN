@@ -191,12 +191,12 @@ function getData(id) {
 
             html += "<div class='row' >";
             html += "<div class='col-md-4 form-group'  >";
-            html += " <label class='control-label' style='font-weight: bold;'> District Number:  </label>";
+            html += " <label class='control-label' style='font-weight: bold;'> District:  </label>";
             html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE.districtMaster.districtName + "</label> </div>";
 
 
             html += "<div class='col-md-4 form-group'  >";
-            html += " <label class='control-label' style='font-weight: bold;'> Barrier Number:  </label>";
+            html += " <label class='control-label' style='font-weight: bold;'> Barrier:  </label>";
             html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE.barriermaster.barrierName + "</label> </div>";
 
             html += "<div class='col-md-4 form-group'  >";

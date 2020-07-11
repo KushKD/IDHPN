@@ -12,9 +12,16 @@
       <div class="cover"></div>
     </section>
     <section class="login-content">
-      <div>
-        <h1>HP Transport ID Card</h1>
+      <div class="row">
+      <div class="col-md-4"></div>
+        <img class="col-md-4 img-responsive img-thumbnail"  src="${pageContext.request.contextPath}/resources/images/hp_police_logo.png">
+         <div class="col-md-4"></div>
+
       </div>
+       <div class="row">
+
+              <h2 class="col-md-12"  style="color:white;">Himachal Pradesh Police Transport ID System </h2><br>
+            </div>
       <div class="login-box">
          <form  method="post"class="login-form"  action="${pageContext.request.contextPath}/login">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>

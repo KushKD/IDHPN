@@ -1,5 +1,8 @@
 package com.dit.himachal.configuration;
 
+import com.dit.himachal.apicontroller.API;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
 
 
     @Bean
