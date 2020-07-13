@@ -122,9 +122,9 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             return "createuser";
         }
-        try{
+        try {
             UserEntity user = new UserEntity();
-            PasswordEncoder encoder  = new BCryptPasswordEncoder();
+            PasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setActive(true);
             user.setMobileNumber(Long.valueOf(registerUser.getMobileNumber()));
             user.setUserName(registerUser.getUsername());
@@ -132,20 +132,20 @@ public class HomeController {
             String roleIid = registerUser.getRoleId();
 
             Optional<RolesEntity> role = roleService.getRoleDetails(roleIid);
-            if(role.get()!=null){
+            if (role.get() != null) {
                 List<RolesEntity> list = new ArrayList<RolesEntity>();
                 list.add(role.get());
                 user.setRoles(list);
                 UserEntity savedData = userservice.saveUser(user);
 
-                 request.getSession().setAttribute("successMessage",  savedData.getUserName()+"  Successfully Saved. ID is" + savedData.getUserId() );
+                request.getSession().setAttribute("successMessage", savedData.getUserName() + "  Successfully Saved. ID is" + savedData.getUserId());
                 registerUser.setMobileNumber("");
                 registerUser.setPasswordConfirm("");
                 registerUser.setPassword("");
                 registerUser.setUsername("");
                 registerUser.setRoleId("0");
                 return "createuser";
-            }else{
+            } else {
                 registerUser.setMobileNumber("");
                 registerUser.setPasswordConfirm("");
                 registerUser.setPassword("");
@@ -155,7 +155,7 @@ public class HomeController {
                 return "createuser";
             }
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             registerUser.setMobileNumber("");
             registerUser.setPasswordConfirm("");
             registerUser.setUsername("");
@@ -165,7 +165,6 @@ public class HomeController {
         }
 
     }
-
 
 
     @RequestMapping(value = "/createRole", method = RequestMethod.GET)
@@ -182,7 +181,7 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             return "createrole";
         }
-        try{
+        try {
             RolesEntity rolesEntity = new RolesEntity();
             rolesEntity.setActive(true);
             rolesEntity.setRoleName(roleForm.getRoleName());
@@ -190,13 +189,13 @@ public class HomeController {
             RolesEntity savedData = roleService.saveRole(rolesEntity);
             roleForm.setRoleName("");
             roleForm.setRoleDescription("");
-            request.getSession().setAttribute("successMessage",  savedData.getRoleName()+" role Successfully Saved. ID is" + savedData.getRoleId() );
-            return  "createrole";
-        }catch(Exception ex){
+            request.getSession().setAttribute("successMessage", savedData.getRoleName() + " role Successfully Saved. ID is" + savedData.getRoleId());
+            return "createrole";
+        } catch (Exception ex) {
             roleForm.setRoleName("");
             roleForm.setRoleDescription("");
             model.addAttribute("serverError", ex.toString());
-            return  "createrole";
+            return "createrole";
         }
     }
 
@@ -220,15 +219,15 @@ public class HomeController {
             return "searchid";
         }
         try {
-            List<VehicleOwnerEntries> data = vehicleOwnerEntriesService.searchIdentityList(Long.valueOf(idcard.getMobileNumber()),idcard.getVehicleNumber());
+            List<VehicleOwnerEntries> data = vehicleOwnerEntriesService.searchIdentityList(Long.valueOf(idcard.getMobileNumber()), idcard.getVehicleNumber());
 
-            if(!data.isEmpty()){
+            if (!data.isEmpty()) {
                 request.getSession().setAttribute("successMessage", "Data found Successfully");
-                model.addAttribute("vehicledata",data);
+                model.addAttribute("vehicledata", data);
                 idcard.setMobileNumber(idcard.getMobileNumber());
                 idcard.setVehicleNumber(idcard.getVehicleNumber());
                 return "searchid";
-            }else{
+            } else {
                 idcard.setMobileNumber("");
                 idcard.setVehicleNumber("");
                 model.addAttribute("serverError", "No Data available for the current Vehicle Number and Mobile Number");
@@ -254,16 +253,20 @@ public class HomeController {
             return "showidcards";
         }
         try {
-            List<VehicleOwnerEntries> data = vehicleOwnerEntriesService.getDataViaDistrictBarrier(Integer.parseInt(idcard.getDistrict_id()) ,
-                    Integer.parseInt(idcard.getBarrier_id()),idcard.getDate().trim());
-            if(!data.isEmpty()){
+            List<VehicleOwnerEntries> data = vehicleOwnerEntriesService.getDataViaDistrictBarrier(Integer.parseInt(idcard.getDistrict_id()),
+                    Integer.parseInt(idcard.getBarrier_id()), idcard.getDate().trim());
+            if (!data.isEmpty()) {
                 request.getSession().setAttribute("successMessage", "Data found Successfully");
-                model.addAttribute("vehicledata",data);
+                model.addAttribute("vehicledata", data);
+                model.addAttribute("barrierid", idcard.getBarrier_id());
+                model.addAttribute("districtid", idcard.getDistrict_id());
                 idcard.setDate(idcard.getDate());
                 idcard.setBarrier_id(idcard.getBarrier_id());
                 idcard.setDistrict_id(idcard.getDistrict_id());
                 return "showidcards";
-            }else{
+            } else {
+                model.addAttribute("barrierid", idcard.getBarrier_id());
+                model.addAttribute("districtid", idcard.getDistrict_id());
                 idcard.setDate(idcard.getDate());
                 idcard.setBarrier_id(idcard.getBarrier_id());
                 idcard.setDistrict_id(idcard.getDistrict_id());
@@ -283,27 +286,24 @@ public class HomeController {
     }
 
 
-
-    @RequestMapping(value="/generateId/{id}", method = RequestMethod.GET,
+    @RequestMapping(value = "/generateId/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_PDF_VALUE)
-    public @ResponseBody ResponseEntity<InputStreamResource> printId(@PathVariable("id") String id) throws IOException, WriterException, DocumentException {
+    public @ResponseBody
+    ResponseEntity<InputStreamResource> printId(@PathVariable("id") String id) throws IOException, WriterException, DocumentException {
 
         Optional<VehicleOwnerEntries> vehicleOwnerEntries = vehicleOwnerEntriesService.getOwnerDetails(Long.valueOf(id));
-            ByteArrayInputStream bis = GeneratePdfReport.generateIdCard(vehicleOwnerEntries.get());
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "inline; filename=" + vehicleOwnerEntries.get().getIdCardNumber() + ".pdf");
+        ByteArrayInputStream bis = GeneratePdfReport.generateIdCard(vehicleOwnerEntries.get());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=" + vehicleOwnerEntries.get().getIdCardNumber() + ".pdf");
 
 
-            return ResponseEntity
-                    .ok()
-                    .headers(headers)
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(new InputStreamResource(bis));
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
 
     }
-
-
-
 
 
 }

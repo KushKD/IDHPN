@@ -75,7 +75,11 @@ function getdistricts() {
             selectRole.find('option').remove();
             selectRole.append("<option value=" + 0 + " >" + "---Please District---" + "</option>")
             for (i = 0; i < data.RESPONSE.length; i++) {
+            if(document.getElementById('did') != null && document.getElementById('did').value == data.RESPONSE[i].districtId ){
+                selectRole.append("<option selected value=" + data.RESPONSE[i].districtId + " >" + data.RESPONSE[i].districtName + "</option>")
+            }else {
                 selectRole.append("<option value=" + data.RESPONSE[i].districtId + " >" + data.RESPONSE[i].districtName + "</option>")
+            }
             }
 
         },
@@ -101,8 +105,13 @@ function loadBarriers(id) {
             selectRole.find('option').remove();
             selectRole.append("<option value=" + 0 + " >" + "---Select Barrier ---" + "</option>")
             for (i = 0; i < data.RESPONSE.length; i++) {
-                selectRole.append("<option value=" + data.RESPONSE[i].barrierId + " >" + data.RESPONSE[i].barrierName + "</option>")
-            }
+            if(document.getElementById('bid') != null && document.getElementById('bid').value == data.RESPONSE[i].barrierId ){
+                            selectRole.append("<option selected value=" + data.RESPONSE[i].barrierId + " >" + data.RESPONSE[i].barrierName + "</option>")
+                        }else {
+                            selectRole.append("<option value=" + data.RESPONSE[i].barrierId + " >" + data.RESPONSE[i].barrierName + "</option>")
+                        }
+
+            };
 
         },
         error: function(data) {
