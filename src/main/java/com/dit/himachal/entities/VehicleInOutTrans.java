@@ -2,6 +2,7 @@ package com.dit.himachal.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 
 @Entity
 @Table(name = "vehicle_in_out_trans")
@@ -18,14 +19,23 @@ public class VehicleInOutTrans implements Serializable {
 	@Column(name = "in_out_trans_id")
 	private Long transId;
 
-	@Column(name = "vehicle_owner_id")
-	private Integer vehicleOwnerId;
-	
+//	@Column(name = "vehicle_owner_id")
+//	private Integer vehicleOwnerId;
+
 	@Column(name = "captured_by")
 	private Integer capturedBy;
 
-	@Column(name = "barrier_id")
-	private Integer barrierId;
+	@OneToOne
+	@JoinColumn(name = "vehicle_owner_id", updatable = false)
+	private VehicleOwnerEntries vehicleOwnerDetails;
+
+//	@OneToOne
+//	@JoinColumn(name = "captured_by")
+//	private UserEntity capturedBy;
+
+	@OneToOne
+	@JoinColumn(name = "barrier_id", updatable = false)
+	private BarrierMaster barriermaster;
 
 	@Column(name = "latitude")
 	private Double latitude;
@@ -39,9 +49,6 @@ public class VehicleInOutTrans implements Serializable {
 	@Column(name = "remarks")
 	private String remarks;
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
 
 	public Long getTransId() {
 		return transId;
@@ -51,28 +58,28 @@ public class VehicleInOutTrans implements Serializable {
 		this.transId = transId;
 	}
 
-	public Integer getVehicleOwnerId() {
-		return vehicleOwnerId;
+	public VehicleOwnerEntries getVehicleOwnerDetails() {
+		return vehicleOwnerDetails;
 	}
 
-	public void setVehicleOwnerId(Integer vehicleOwnerId) {
-		this.vehicleOwnerId = vehicleOwnerId;
+	public void setVehicleOwnerDetails(VehicleOwnerEntries vehicleOwnerDetails) {
+		this.vehicleOwnerDetails = vehicleOwnerDetails;
 	}
 
-	public Integer getCapturedBy() {
-		return capturedBy;
+//	public UserEntity getUserentity() {
+//		return userentity;
+//	}
+//
+//	public void setUserentity(UserEntity userentity) {
+//		this.userentity = userentity;
+//	}
+
+	public BarrierMaster getBarriermaster() {
+		return barriermaster;
 	}
 
-	public void setCapturedBy(Integer capturedBy) {
-		this.capturedBy = capturedBy;
-	}
-
-	public Integer getBarrierId() {
-		return barrierId;
-	}
-
-	public void setBarrierId(Integer barrierId) {
-		this.barrierId = barrierId;
+	public void setBarriermaster(BarrierMaster barriermaster) {
+		this.barriermaster = barriermaster;
 	}
 
 	public Double getLatitude() {
@@ -107,13 +114,32 @@ public class VehicleInOutTrans implements Serializable {
 		this.remarks = remarks;
 	}
 
+//	public Integer getCapturedBy() {
+//		return capturedBy;
+//	}
+//
+//	public void setCapturedBy(Integer capturedBy) {
+//		this.capturedBy = capturedBy;
+//	}
+
+
+	public Integer getCapturedBy() {
+		return capturedBy;
+	}
+
+	public void setCapturedBy(Integer capturedBy) {
+		this.capturedBy = capturedBy;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "VehicleInOutTrans{" +
 				"transId=" + transId +
-				", vehicleOwnerId='" + vehicleOwnerId + '\'' +
 				", capturedBy=" + capturedBy +
-				", barrierId=" + barrierId +
+				", vehicleOwnerDetails=" + vehicleOwnerDetails +
+				", barriermaster=" + barriermaster +
 				", latitude=" + latitude +
 				", longitude=" + longitude +
 				", isActive=" + isActive +

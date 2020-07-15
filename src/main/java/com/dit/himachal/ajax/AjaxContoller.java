@@ -2,14 +2,12 @@ package com.dit.himachal.ajax;
 
 import com.dit.himachal.ModalInterfaces.RoleIdName;
 import com.dit.himachal.apicontroller.API;
-import com.dit.himachal.entities.BarrierMaster;
-import com.dit.himachal.entities.DistrictMaster;
-import com.dit.himachal.entities.RolesEntity;
-import com.dit.himachal.entities.VehicleOwnerEntries;
+import com.dit.himachal.entities.*;
 import com.dit.himachal.modals.RolesModal;
 import com.dit.himachal.repositories.RolesRepository;
 import com.dit.himachal.services.BarrierService;
 import com.dit.himachal.services.DistrictService;
+import com.dit.himachal.services.VehicleInOutService;
 import com.dit.himachal.services.VehicleOwnerEntriesService;
 import com.dit.himachal.utilities.Constants;
 import org.slf4j.Logger;
@@ -41,6 +39,9 @@ public class AjaxContoller {
 
     @Autowired
     VehicleOwnerEntriesService vehicleOwnerEntriesService;
+
+    @Autowired
+    VehicleInOutService vehicleInOutService;
 
     private static final Logger logger = LoggerFactory.getLogger(AjaxContoller.class);
 
@@ -106,6 +107,22 @@ public class AjaxContoller {
     ResponseEntity<?> getVehicleOwnerData(@RequestParam(value = "id", required = true) String id) throws Exception {
         Map<String, Object> map = null;
         Optional<VehicleOwnerEntries> vehicleOwnerData = vehicleOwnerEntriesService.getOwnerDetails(Long.valueOf(id));
+
+        map = new HashMap<String, Object>();
+        map.put(Constants.keyResponse, vehicleOwnerData);
+        map.put(Constants.keyMessage, Constants.valueMessage);
+        map.put(Constants.keyStatus, HttpStatus.OK);
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+
+    }
+
+    //getTransactions
+    @RequestMapping(value = "/ajax/getTransactions", method = RequestMethod.GET,  produces="application/json")
+    public @ResponseBody
+    ResponseEntity<?> getTransactions(@RequestParam(value = "id", required = true) String id) throws Exception {
+        Map<String, Object> map = null;
+        List<VehicleInOutTrans> vehicleOwnerData = vehicleInOutService.getTransactions(Integer.parseInt(id));
 
         map = new HashMap<String, Object>();
         map.put(Constants.keyResponse, vehicleOwnerData);

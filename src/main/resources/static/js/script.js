@@ -229,4 +229,47 @@ function getData(id) {
         }
 
     });
-}
+    }
+
+
+    function getTransactions(id) {
+        $.ajax({
+            type: "GET",
+            url: formURL + "/ajax/getTransactions",
+            data: {
+                "id": id
+            },
+            success: function(data) {
+            console.log(data.RESPONSE);
+            for (i = 0; i < data.RESPONSE.length; i++) {
+
+           var html = "";
+                       html += "<div class='row' >";
+                        html += "<div class='col-md-4 form-group' >";
+                        html += " <label class='control-label' style='font-weight: bold;'> Name:  </label>";
+                        html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE[i].vehicleOwnerDetails.vehicleOwnerName + "</label> </div>";
+
+                           html += "<div class='col-md-5 form-group'  >";
+                           html += " <label class='control-label' style='font-weight: bold;'> Mobile Number:  </label>";
+                           html += " <label class='control-label' style='font-weight: bold;'>" + data.RESPONSE[i].vehicleOwnerDetails.vehicleOwnerMobileNumber + "</label> </div>";
+                           html += "<br>";
+
+
+                         html += "<p>"+ data.RESPONSE[i].barriermaster.barrierName +" Remarks:-"+  data.RESPONSE[i].remarks+ "  Date:- "+  data.RESPONSE[i].createdDate +"</p>";
+
+
+                         html += "</div>";
+                           }
+
+                       $('.modal-body').html(html);
+
+                       $('#empModal').modal('show');
+
+
+            },
+            error: function(data) {
+                console.log(data)
+            }
+
+        });
+        }

@@ -1,6 +1,14 @@
 package com.dit.himachal;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,7 +93,47 @@ class AppleSeasonIdCardHpApplicationTests {
 //     
 //      System.out.println("!@!@!@!@!"+random24.randomDecimalString(6)); 
 //  }
-	
+
+
+//    @Test
+//    void testDate() throws ParseException {
+//        DateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy");
+//        DateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date date = originalFormat.parse("14-07-2020");
+//        String formattedDate = targetFormat.format(date);
+//        System.out.println(formattedDate);
+//    }
+
+//    @Test
+//    private void date(){
+//        System.out.println("-----Current time of a different time zone using LocalTime-----");
+//        ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+//        LocalTime localTime=LocalTime.now(zoneId);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+//        String formattedTime=localTime.format(formatter);
+//        System.out.println("Current time of the day in Los Angeles: " + formattedTime);
+//    }
+
+//    @Test
+//    public  void convertStringSqlDate() {
+//
+//
+//
+//        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+//        java.util.Date parsed = null;
+//
+//        try {
+//            parsed = format.parse("14-07-2020");
+//        } catch (ParseException e) {
+//
+//        }
+//
+//        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+//        System.out.println(sql);
+//       // return sql;
+//    }
+
+
 	
 	
     

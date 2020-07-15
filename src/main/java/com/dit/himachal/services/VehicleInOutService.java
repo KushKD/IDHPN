@@ -30,4 +30,9 @@ public class VehicleInOutService {
 		return savedData;
 	}
 
+	public List<VehicleInOutTrans> getTransactions(Integer id) {
+		List<VehicleInOutTrans> data = vehicleInOutTransRepository.getallTransactions(id);
+		return data;
+	}
+
 }

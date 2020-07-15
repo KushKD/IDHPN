@@ -556,16 +556,16 @@ public class API {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/saveVehicleData", consumes = "application/json", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> saveVehicleDetails(@RequestBody VehicleInOutTrans jsondata) throws IOException {
+    public ResponseEntity<?> saveVehicleDetails(@RequestBody String jsondata) throws IOException {
 
         VehicleInOutTrans vehicleInOutEntitity = null;
         Map<String, Object> map = null;
         System.out.println(jsondata);
         if (jsondata != null) {
-
+            vehicleInOutEntitity = objectMapper.readValue(jsondata, VehicleInOutTrans.class);
 
             try {
-                vehicleInOutEntitity = vehicleInOutService.saveVehicleInOutTrans(jsondata);
+                vehicleInOutEntitity = vehicleInOutService.saveVehicleInOutTrans(vehicleInOutEntitity);
                 if (vehicleInOutEntitity != null) {
 
                     map = new HashMap<String, Object>();

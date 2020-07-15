@@ -83,6 +83,7 @@
 										<th>Valid Upto</th>
 										<th>Generate Id Card</th>
 										<th>View Details</th>
+
 									</tr>
 								</thead>
 								<tbody>
@@ -102,6 +103,7 @@
 											<td>
 												<a href="#" class="button button-success" onclick="getData('${vehicledata.vehicleOwnerId}')";>View Details</a>
 											</td>
+
 										</tr>
 									</c:forEach>
 								</tbody>
