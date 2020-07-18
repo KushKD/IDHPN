@@ -53,10 +53,10 @@ window.addEventListener('popstate', function(event) {
                 </sec:authorize>
  <sec:authorize access="hasAuthority('ADMIN')">
    <div class="col-md-6 col-lg-3">
-          <div class="widget-small danger coloured-icon"><i class="icon fa fa-lock fa-3x"></i>
+          <div class="widget-small danger coloured-icon"><i class="icon fa fa-file-excel-o fa-3x"></i>
             <div class="info">
-             <a href="${pageContext.request.contextPath}/createRole" style=" text-decoration: none !important;">
-                           <h4>Create Role</h4></a>
+             <a href="${pageContext.request.contextPath}/generateReport" style=" text-decoration: none !important;">
+                           <h4>Generate Reports</h4></a>
 
             </div>
           </div>

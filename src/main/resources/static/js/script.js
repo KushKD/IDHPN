@@ -73,7 +73,7 @@ function getdistricts() {
             console.log(data.RESPONSE)
             var selectRole = $('#districts'); // the state select element
             selectRole.find('option').remove();
-            selectRole.append("<option value=" + 0 + " >" + "---Please District---" + "</option>")
+           selectRole.append("<option value=" + 0 + " >" + "---Select District---" + "</option>")
             for (i = 0; i < data.RESPONSE.length; i++) {
             if(document.getElementById('did') != null && document.getElementById('did').value == data.RESPONSE[i].districtId ){
                 selectRole.append("<option selected value=" + data.RESPONSE[i].districtId + " >" + data.RESPONSE[i].districtName + "</option>")
