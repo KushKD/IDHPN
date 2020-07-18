@@ -49,5 +49,13 @@ public class Utilities {
         return new String(decodedBytes, Charset.forName("UTF-8"));
     }
 
+    public static boolean ifEmptyField(String str) {
+        if (str != null && !"".equals(str.trim()) && !"''".equals(str.trim()) && !"null".equals(str.trim())
+                && !str.isEmpty() && !"0".equalsIgnoreCase(str.trim()))
+            return true;
+
+        return false;
+    }
+
 
 }

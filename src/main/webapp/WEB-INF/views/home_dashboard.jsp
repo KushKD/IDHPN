@@ -1,3 +1,6 @@
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+	<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <script>
 history.pushState(null, null, 'no-back-button');
 window.addEventListener('popstate', function(event) {
@@ -37,8 +40,28 @@ window.addEventListener('popstate', function(event) {
             </div>
           </div>
         </div>
+         <sec:authorize access="hasAuthority('ADMIN')">
+           <div class="col-md-6 col-lg-3">
+                  <div class="widget-small warning coloured-icon"><i class="icon fa fa-user fa-3x"></i>
+                    <div class="info">
+                     <a href="${pageContext.request.contextPath}/createUser" style=" text-decoration: none !important;">
+                                   <h4>Create User</h4></a>
 
+                    </div>
+                  </div>
+                </div>
+                </sec:authorize>
+ <sec:authorize access="hasAuthority('ADMIN')">
+   <div class="col-md-6 col-lg-3">
+          <div class="widget-small danger coloured-icon"><i class="icon fa fa-lock fa-3x"></i>
+            <div class="info">
+             <a href="${pageContext.request.contextPath}/createRole" style=" text-decoration: none !important;">
+                           <h4>Create Role</h4></a>
 
+            </div>
+          </div>
+        </div>
+ </sec:authorize>
 
 
       </div>

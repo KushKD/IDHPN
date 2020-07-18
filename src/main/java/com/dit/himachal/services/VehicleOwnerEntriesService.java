@@ -63,5 +63,46 @@ public class VehicleOwnerEntriesService {
 
 	}
 
+	public List<VehicleOwnerEntries> getReportAllParameters(Integer districtId, Integer barrierId, Integer vehicleType, Integer OwnerType, String fromDate, String toDate){
+		return vehicleOwnerEntriesRepository.getReportAllParams(districtId,barrierId,vehicleType,OwnerType,fromDate,toDate);
+	}
+
+	public List<VehicleOwnerEntries> getReportAllParametersNoOwner(Integer districtId, Integer barrierId, Integer vehicleType, String fromDate, String toDate){
+		return vehicleOwnerEntriesRepository.getReportParamsNoOwner(districtId,barrierId,vehicleType,fromDate,toDate);
+	}
+
+
+	public List<VehicleOwnerEntries> getReportAllParametersOwnerDates(Integer districtId, Integer barrierId, Integer ownerType, String fromDate, String toDate){
+		return vehicleOwnerEntriesRepository.getReportAllParametersOwnerDates(districtId,barrierId,ownerType,fromDate,toDate);
+	}
+
+	public List<VehicleOwnerEntries> getReportDistrictBarrierToFrom(Integer districtId, Integer barrierId, String fromDate, String toDate){
+		return vehicleOwnerEntriesRepository.getReportDistrictBarrierFromTwo(districtId,barrierId,fromDate,toDate);
+	}
+
+	public List<VehicleOwnerEntries> getReportDistrictBarrierFrom(Integer districtId, Integer barrierId, String fromDate){
+		return vehicleOwnerEntriesRepository.getReportDistrictBarrierFrom(districtId,barrierId,fromDate);
+	}
+
+	public List<VehicleOwnerEntries> getReportDistrictBarrier(Integer districtId, Integer barrierId){
+		return vehicleOwnerEntriesRepository.getReportDistrictBarrier(districtId,barrierId);
+	}
+
+	//getReportDistrictBarrierVehicleType
+	public List<VehicleOwnerEntries> getReportDistrictBarrierVehicleType(Integer districtId, Integer barrierId,Integer vehicleType){
+		return vehicleOwnerEntriesRepository.getReportDistrictBarrierVehicleType(districtId,barrierId, vehicleType);
+	}
+
+
+	public List<VehicleOwnerEntries> getReportDistrictBarrierOwnerTypeType(Integer districtId, Integer barrierId,Integer vehicleType){
+		return vehicleOwnerEntriesRepository.getReportDistrictBarrierOwnerTypeType(districtId,barrierId, vehicleType);
+	}
+
+	//getReportDistrictBarrierOwnerTypeVehicleType
+	public List<VehicleOwnerEntries> getReportDistrictBarrierOwnerTypeVehicleType(Integer districtId, Integer barrierId,Integer vehicleType, Integer ownerType){
+		return vehicleOwnerEntriesRepository.getReportDistrictBarrierOwnerTypeVehicleType(districtId,barrierId, vehicleType, ownerType);
+	}
+
+
 
 }

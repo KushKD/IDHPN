@@ -92,6 +92,62 @@ function getdistricts() {
 
 }
 
+
+function getVehicleType() {
+    $.ajax({
+        type: "GET",
+        url: formURL + "/ajax/getVehicleType",
+        success: function(data) {
+            console.log(data.RESPONSE)
+            var selectRole = $('#vehicletype'); // the state select element
+            selectRole.find('option').remove();
+            selectRole.append("<option value=" + 0 + " >" + "---Please Select---" + "</option>")
+            for (i = 0; i < data.RESPONSE.length; i++) {
+            if(document.getElementById('vid') != null && document.getElementById('vid').value == data.RESPONSE[i].vehicleId ){
+                selectRole.append("<option selected value=" + data.RESPONSE[i].vehicleId + " >" + data.RESPONSE[i].vehicleName + "</option>")
+            }else {
+                selectRole.append("<option value=" + data.RESPONSE[i].vehicleId + " >" + data.RESPONSE[i].vehicleName + "</option>")
+            }
+            }
+
+        },
+        error: function(data) {
+            console.log(data)
+        }
+
+    });
+
+
+}
+
+
+function getOwnerType() {
+    $.ajax({
+        type: "GET",
+        url: formURL + "/ajax/getOwnerType",
+        success: function(data) {
+            console.log(data.RESPONSE)
+            var selectRole = $('#ownertype'); // the state select element
+            selectRole.find('option').remove();
+            selectRole.append("<option value=" + 0 + " >" + "---Please Select---" + "</option>")
+            for (i = 0; i < data.RESPONSE.length; i++) {
+            if(document.getElementById('oid') != null && document.getElementById('oid').value == data.RESPONSE[i].vehicleOwnerTypeId ){
+                selectRole.append("<option selected value=" + data.RESPONSE[i].vehicleOwnerTypeId + " >" + data.RESPONSE[i].vehicleOwnerTypeName + "</option>")
+            }else {
+                selectRole.append("<option value=" + data.RESPONSE[i].vehicleOwnerTypeId + " >" + data.RESPONSE[i].vehicleOwnerTypeName + "</option>")
+            }
+            }
+
+        },
+        error: function(data) {
+            console.log(data)
+        }
+
+    });
+
+
+}
+
 function loadBarriers(id) {
     $.ajax({
         type: "GET",

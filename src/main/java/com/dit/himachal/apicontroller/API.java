@@ -87,45 +87,53 @@ public class API {
         Map<String, Object> map = null;
 
         if (file != null && jsondata != null) {
-            vehicleUSerEntries = objectMapper.readValue(jsondata, VehicleOwnerEntries.class);
-            //Save File
-            String fileName = fileStorageService.storeFile(file);
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/downloadFile/")
-                    .path(fileName)
-                    .toUriString();
+           try{
+               vehicleUSerEntries = objectMapper.readValue(jsondata, VehicleOwnerEntries.class);
+               //Save File
+               String fileName = fileStorageService.storeFile(file);
+               String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                       .path("/downloadFile/")
+                       .path(fileName)
+                       .toUriString();
 
 
-            //Generate ID CARD NUMBER  HP/BARRIERID/Number
-            vehicleUSerEntries.setIdCardNumber("REGD.NO/HP/" + barrierService.getBarrierName(vehicleUSerEntries.getBarriermaster().getBarrierId()) + "/" + entriesService.getIdCardNumberSequence());
-            vehicleUSerEntries.setVehicleOwnerImageName(fileName);
+               //Generate ID CARD NUMBER  HP/BARRIERID/Number
+               vehicleUSerEntries.setIdCardNumber("REGD.NO/HP/" + barrierService.getBarrierName(vehicleUSerEntries.getBarriermaster().getBarrierId()) + "/" + entriesService.getIdCardNumberSequence());
+               vehicleUSerEntries.setVehicleOwnerImageName(fileName);
 
-            vehicleUSerEntries.setMobileInformation("");
-            vehicleUSerEntries.setOtherInformation("");
-            //Save Vehicle Entries
-            Long ID = entriesService.saveVehicleOwnerEntries(vehicleUSerEntries);
-            System.out.println(ID);
-            String generatePdfUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/api/generateqrcode/")
-                    .path(Utilities.base64Encode(Long.toString(ID)))
-                    .toUriString();
-            System.out.println(generatePdfUrl);
-            int id_ = ID.intValue();
-            VehicleOwnerDocuments vehicleOwnerDocuments = new VehicleOwnerDocuments();
-            vehicleOwnerDocuments.setActive(true);
-            vehicleOwnerDocuments.setUploadedBy(vehicleUSerEntries.getDataEnteredBy());
-            vehicleOwnerDocuments.setVehicleImageOwner(file.getBytes());
-            vehicleOwnerDocuments.setVehicleOwnerId(id_);
-            vehicleOwnerDocuments.setFileType(file.getContentType());
-            String[] fileFrags = file.getOriginalFilename().split("\\.");
-            String extension = fileFrags[fileFrags.length - 1];
-            vehicleOwnerDocuments.setFileExtention(extension);
-            vehicleOwnerDocumentsService.saveDocuments(vehicleOwnerDocuments);
-            map = new HashMap<String, Object>();
-            map.put(Constants.keyResponse, new UploadFileResponse(fileName, fileDownloadUri, generatePdfUrl, file.getContentType(), file.getSize(), vehicleUSerEntries));
-            map.put(Constants.keyMessage, Constants.valueMessage);
-            map.put(Constants.keyStatus, HttpStatus.OK);
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+               vehicleUSerEntries.setMobileInformation("");
+               vehicleUSerEntries.setOtherInformation("");
+               //Save Vehicle Entries
+               Long ID = entriesService.saveVehicleOwnerEntries(vehicleUSerEntries);
+               System.out.println(ID);
+               String generatePdfUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                       .path("/api/generateqrcode/")
+                       .path(Utilities.base64Encode(Long.toString(ID)))
+                       .toUriString();
+               System.out.println(generatePdfUrl);
+               int id_ = ID.intValue();
+               VehicleOwnerDocuments vehicleOwnerDocuments = new VehicleOwnerDocuments();
+               vehicleOwnerDocuments.setActive(true);
+               vehicleOwnerDocuments.setUploadedBy(vehicleUSerEntries.getDataEnteredBy());
+               vehicleOwnerDocuments.setVehicleImageOwner(file.getBytes());
+               vehicleOwnerDocuments.setVehicleOwnerId(id_);
+               vehicleOwnerDocuments.setFileType(file.getContentType());
+               String[] fileFrags = file.getOriginalFilename().split("\\.");
+               String extension = fileFrags[fileFrags.length - 1];
+               vehicleOwnerDocuments.setFileExtention(extension);
+               vehicleOwnerDocumentsService.saveDocuments(vehicleOwnerDocuments);
+               map = new HashMap<String, Object>();
+               map.put(Constants.keyResponse, new UploadFileResponse(fileName, fileDownloadUri, generatePdfUrl, file.getContentType(), file.getSize(), vehicleUSerEntries));
+               map.put(Constants.keyMessage, Constants.valueMessage);
+               map.put(Constants.keyStatus, HttpStatus.OK);
+               return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+           }catch(Exception ex){
+               map = new HashMap<String, Object>();
+               map.put(Constants.keyResponse, ex.getLocalizedMessage());
+               map.put(Constants.keyMessage, Constants.valueMessage);
+               map.put(Constants.keyStatus, HttpStatus.OK);
+               return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
+           }
 
 
         } else {

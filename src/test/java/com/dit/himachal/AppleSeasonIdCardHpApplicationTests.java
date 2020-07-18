@@ -81,9 +81,9 @@ class AppleSeasonIdCardHpApplicationTests {
 //    @Test
 //    void bCryptPassword(){
 //        PasswordEncoder encoder = new BCryptPasswordEncoder();
-//        encoder.encode("Demo@123");
+//        encoder.encode("fagu@123");
 //        System.out.printf("\n");
-//        System.out.printf(encoder.encode("Demo@123"));
+//        System.out.printf(encoder.encode("fagu@123"));
 //        System.out.printf("\n");
 //    }
 //    

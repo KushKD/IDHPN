@@ -5,10 +5,7 @@ import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.*;
 import com.dit.himachal.modals.RolesModal;
 import com.dit.himachal.repositories.RolesRepository;
-import com.dit.himachal.services.BarrierService;
-import com.dit.himachal.services.DistrictService;
-import com.dit.himachal.services.VehicleInOutService;
-import com.dit.himachal.services.VehicleOwnerEntriesService;
+import com.dit.himachal.services.*;
 import com.dit.himachal.utilities.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +39,12 @@ public class AjaxContoller {
 
     @Autowired
     VehicleInOutService vehicleInOutService;
+
+    @Autowired
+    VehicleTypeService vehicleTypeService;
+
+    @Autowired
+    VehicleUserTypeService vehicleUserTypeService;
 
     private static final Logger logger = LoggerFactory.getLogger(AjaxContoller.class);
 
@@ -79,6 +82,37 @@ public class AjaxContoller {
 
         map = new HashMap<String, Object>();
         map.put(Constants.keyResponse, districts);
+        map.put(Constants.keyMessage, Constants.valueMessage);
+        map.put(Constants.keyStatus, HttpStatus.OK);
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+
+    }
+
+
+    @RequestMapping(value = "/ajax/getVehicleType", method = RequestMethod.GET,  produces="application/json")
+    public @ResponseBody
+    ResponseEntity<?> getVehicles() throws Exception {
+        Map<String, Object> map = null;
+        List<VehicleTypeMaster> vehicleTypes = vehicleTypeService.getVehicleTypes();
+
+        map = new HashMap<String, Object>();
+        map.put(Constants.keyResponse, vehicleTypes);
+        map.put(Constants.keyMessage, Constants.valueMessage);
+        map.put(Constants.keyStatus, HttpStatus.OK);
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+
+    }
+
+    @RequestMapping(value = "/ajax/getOwnerType", method = RequestMethod.GET,  produces="application/json")
+    public @ResponseBody
+    ResponseEntity<?> getOwnerType() throws Exception {
+        Map<String, Object> map = null;
+        List<VehicleUserType> ownerTypes = vehicleUserTypeService.getVehicleUserTypes();
+
+        map = new HashMap<String, Object>();
+        map.put(Constants.keyResponse, ownerTypes);
         map.put(Constants.keyMessage, Constants.valueMessage);
         map.put(Constants.keyStatus, HttpStatus.OK);
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);

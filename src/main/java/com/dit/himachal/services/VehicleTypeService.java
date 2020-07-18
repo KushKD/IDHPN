@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.dit.himachal.entities.StatesMaster;
 import com.dit.himachal.entities.VehicleTypeMaster;
-import com.dit.himachal.repositories.StateRepository;
 import com.dit.himachal.repositories.VehicleTypeRepository;
 
 @Service
