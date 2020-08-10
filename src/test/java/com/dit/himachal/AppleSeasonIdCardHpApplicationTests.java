@@ -1,5 +1,9 @@
 package com.dit.himachal;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.security.Provider;
+import java.security.Security;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,7 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
+import com.dit.himachal.modals.VehicleDetailsObject;
+import com.dit.himachal.security.CryptographyAES;
+import com.dit.himachal.utilities.Constants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +36,12 @@ import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.repositories.RolesRepository;
 import com.dit.himachal.repositories.UserRepository;
 import com.dit.himachal.utilities.random24;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 @SpringBootTest
 class AppleSeasonIdCardHpApplicationTests {
@@ -134,7 +150,69 @@ class AppleSeasonIdCardHpApplicationTests {
 //    }
 
 
-	
-	
-    
+        @Test
+    public  void checkCrypto() throws ParserConfigurationException, IOException, SAXException {
+
+            CryptographyAES AES = new CryptographyAES();
+
+           String decrypt = AES.decryptFile(Constants.stringSample,Constants.securityKeyAES);
+            System.out.println( " Decryption " +decrypt);
+
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse( new InputSource( new StringReader( decrypt ) ) );
+
+            doc.getDocumentElement().normalize();
+
+            NodeList nodeList = doc.getElementsByTagName("VehicleDetails");
+            List<VehicleDetailsObject> vehicleDetails = new ArrayList<>();
+
+            //loop all available student nodes
+            for (int i = 0; i < nodeList.getLength(); i++) {
+
+                Node node = nodeList.item(i);
+
+                if(node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elem = (Element) node;
+                    VehicleDetailsObject data = new VehicleDetailsObject();
+                    data.setRcChassisNo(elem.getElementsByTagName("rc_chasi_no").item(0).getTextContent());
+                    data.setRcEngineNumber(elem.getElementsByTagName("rc_eng_no").item(0).getTextContent());
+                    data.setRcFitUpto(elem.getElementsByTagName("rc_fit_upto").item(0).getTextContent());
+                    data.setRcRegisteredAt(elem.getElementsByTagName("rc_registered_at").item(0).getTextContent());
+                    data.setRcStatus(elem.getElementsByTagName("rc_status").item(0).getTextContent());
+                    data.setRcRegistrationNo(elem.getElementsByTagName("rc_regn_no").item(0).getTextContent());
+                    data.setRcStatusAsOn(elem.getElementsByTagName("rc_status_as_on").item(0).getTextContent());
+                    System.out.println(data.toString());
+
+                    vehicleDetails.add(data);
+                }
+            }
+
+
+
+
+    }
+
+    //postData
+
+//    @Test
+//    public void getData() {
+//
+//            HTTP http = new HTTP();
+//            String data = http.postData();
+//
+//        System.out.println("Data is:= "+ data);
+//
+//
+//    }
+
+
+
+
+
+
+
+
+
 }

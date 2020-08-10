@@ -64,6 +64,14 @@
      <li><a class="app-menu__item" href="${pageContext.request.contextPath}/generateReport"><i class="app-menu__icon fa fa-file-excel-o"></i><span class="app-menu__label">Reports</span></a></li>
  </sec:authorize>
 
+    <sec:authorize access="hasAuthority('ADMIN')">
+      <li><a class="app-menu__item" href="${pageContext.request.contextPath}/vahanService"><i class="app-menu__icon fa fa-bus"></i><span class="app-menu__label">VAHAN Service</span></a></li>
+  </sec:authorize>
+
+   <!--  <sec:authorize access="hasAuthority('ADMIN')">
+       <li><a class="app-menu__item" href="${pageContext.request.contextPath}/generateReport"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label">Driving Licence Service</span></a></li>
+   </sec:authorize>
+    -->
 
       </ul>
     </aside>

@@ -1,9 +1,11 @@
 package com.dit.himachal.apicontroller;
 
+import com.dit.himachal.HTTP;
 import com.dit.himachal.entities.*;
 import com.dit.himachal.externalservices.SMSServices;
 import com.dit.himachal.modals.QRCodeDate;
 import com.dit.himachal.modals.UsePoJo;
+import com.dit.himachal.modals.VahanObject;
 import com.dit.himachal.payload.UploadFileResponse;
 import com.dit.himachal.services.*;
 import com.dit.himachal.utilities.Constants;
@@ -87,60 +89,60 @@ public class API {
         Map<String, Object> map = null;
 
         if (file != null && jsondata != null) {
-           try{
-               vehicleUSerEntries = objectMapper.readValue(jsondata, VehicleOwnerEntries.class);
-               //Save File
-               String fileName = fileStorageService.storeFile(file);
-               String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                       .path("/downloadFile/")
-                       .path(fileName)
-                       .toUriString();
+            try {
+                vehicleUSerEntries = objectMapper.readValue(jsondata, VehicleOwnerEntries.class);
+                //Save File
+                String fileName = fileStorageService.storeFile(file);
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/downloadFile/")
+                        .path(fileName)
+                        .toUriString();
 
 
-               //Generate ID CARD NUMBER  HP/BARRIERID/Number
-               vehicleUSerEntries.setIdCardNumber("REGD.NO/HP/" + barrierService.getBarrierName(vehicleUSerEntries.getBarriermaster().getBarrierId()) + "/" + entriesService.getIdCardNumberSequence());
-               vehicleUSerEntries.setVehicleOwnerImageName(fileName);
+                //Generate ID CARD NUMBER  HP/BARRIERID/Number
+                vehicleUSerEntries.setIdCardNumber("REGD.NO/HP/" + barrierService.getBarrierName(vehicleUSerEntries.getBarriermaster().getBarrierId()) + "/" + entriesService.getIdCardNumberSequence());
+                vehicleUSerEntries.setVehicleOwnerImageName(fileName);
 
-               vehicleUSerEntries.setMobileInformation("");
-               vehicleUSerEntries.setOtherInformation("");
-               //Save Vehicle Entries
-               Long ID = entriesService.saveVehicleOwnerEntries(vehicleUSerEntries);
-               System.out.println(ID);
-               String generatePdfUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                       .path("/api/generateqrcode/")
-                       .path(Utilities.base64Encode(Long.toString(ID)))
-                       .toUriString();
-               System.out.println(generatePdfUrl);
-               int id_ = ID.intValue();
-               VehicleOwnerDocuments vehicleOwnerDocuments = new VehicleOwnerDocuments();
-               vehicleOwnerDocuments.setActive(true);
-               vehicleOwnerDocuments.setUploadedBy(vehicleUSerEntries.getDataEnteredBy());
-               vehicleOwnerDocuments.setVehicleImageOwner(file.getBytes());
-               vehicleOwnerDocuments.setVehicleOwnerId(id_);
-               vehicleOwnerDocuments.setFileType(file.getContentType());
-               String[] fileFrags = file.getOriginalFilename().split("\\.");
-               String extension = fileFrags[fileFrags.length - 1];
-               vehicleOwnerDocuments.setFileExtention(extension);
-               vehicleOwnerDocumentsService.saveDocuments(vehicleOwnerDocuments);
-               map = new HashMap<String, Object>();
-               map.put(Constants.keyResponse, new UploadFileResponse(fileName, fileDownloadUri, generatePdfUrl, file.getContentType(), file.getSize(), vehicleUSerEntries));
-               map.put(Constants.keyMessage, Constants.valueMessage);
-               map.put(Constants.keyStatus, HttpStatus.OK);
-               return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-           }catch(Exception ex){
-               map = new HashMap<String, Object>();
-               map.put(Constants.keyResponse, ex.getLocalizedMessage());
-               map.put(Constants.keyMessage, Constants.valueMessage);
-               map.put(Constants.keyStatus, HttpStatus.OK);
-               return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
-           }
+                vehicleUSerEntries.setMobileInformation("");
+                vehicleUSerEntries.setOtherInformation("");
+                //Save Vehicle Entries
+                Long ID = entriesService.saveVehicleOwnerEntries(vehicleUSerEntries);
+                System.out.println(ID);
+                String generatePdfUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/api/generateqrcode/")
+                        .path(Utilities.base64Encode(Long.toString(ID)))
+                        .toUriString();
+                System.out.println(generatePdfUrl);
+                int id_ = ID.intValue();
+                VehicleOwnerDocuments vehicleOwnerDocuments = new VehicleOwnerDocuments();
+                vehicleOwnerDocuments.setActive(true);
+                vehicleOwnerDocuments.setUploadedBy(vehicleUSerEntries.getDataEnteredBy());
+                vehicleOwnerDocuments.setVehicleImageOwner(file.getBytes());
+                vehicleOwnerDocuments.setVehicleOwnerId(id_);
+                vehicleOwnerDocuments.setFileType(file.getContentType());
+                String[] fileFrags = file.getOriginalFilename().split("\\.");
+                String extension = fileFrags[fileFrags.length - 1];
+                vehicleOwnerDocuments.setFileExtention(extension);
+                vehicleOwnerDocumentsService.saveDocuments(vehicleOwnerDocuments);
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, new UploadFileResponse(fileName, fileDownloadUri, generatePdfUrl, file.getContentType(), file.getSize(), vehicleUSerEntries));
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            } catch (Exception ex) {
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, ex.getLocalizedMessage());
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
+            }
 
 
         } else {
             map = new HashMap<String, Object>();
             map.put(Constants.keyResponse, "Data Missing");
             map.put(Constants.keyMessage, Constants.valueMessage);
-            map.put(Constants.keyStatus, HttpStatus.OK);
+            map.put(Constants.keyStatus, HttpStatus.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
@@ -231,6 +233,46 @@ public class API {
         }
 
     }
+
+    /**
+     * Get Vehicle Details Via Service
+     */
+    @RequestMapping(value = "/api/getVehicleDetails/{regNo}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> getVehicleDetailsViaVahan(@PathVariable("regNo") String registrationNumber) {
+        Map<String, Object> map = null;
+        HTTP http = new HTTP();
+        try {
+            VahanObject object = new VahanObject();
+
+            object.setFunction_name(Constants.getCarDetailsVahan);
+
+
+            object.setUrl(Constants.vahan);
+            object.setParameters_to_send(registrationNumber);
+            VahanObject data = http.postData(object);
+            if (data != null && data.getSuccessFail().equalsIgnoreCase("SUCCESS")) {
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, data);
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            } else {
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, data.getResponse());
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
+        } catch (Exception ex) {
+            map = new HashMap<String, Object>();
+            map.put(Constants.keyResponse, "");
+            map.put(Constants.keyMessage, ex.getLocalizedMessage().toString());
+            map.put(Constants.keyStatus, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     /**
      *

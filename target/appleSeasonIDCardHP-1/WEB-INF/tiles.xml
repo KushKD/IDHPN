@@ -52,6 +52,14 @@
         <put-attribute name="content" value="/WEB-INF/jsp/searchIdcard.jsp" />
     </definition>
 
+    <definition name="reports" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/reportsPage.jsp" />
+    </definition>
+
+    <definition name="vahanDetails" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/vahanDetails.jsp" />
+    </definition>
+
 
 
 
