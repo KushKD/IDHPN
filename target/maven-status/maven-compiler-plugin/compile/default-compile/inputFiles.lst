@@ -1,5 +1,6 @@
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\services\DistrictService.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\exception\MyFileNotFoundException.java
+C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\entities\VahanLog.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\utilities\GeneratePdfReport.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\entities\VehicleInOutTrans.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\form\RolesForm.java
@@ -10,6 +11,7 @@ C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\repositori
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\services\FileStorageService.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\CustomLogin\CustomUserServiceImpl.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\entities\VehicleOwnerDocuments.java
+C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\repositories\VahanLogsRepository.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\services\VehicleTypeService.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\entities\DistrictMaster.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\modals\RolesModal.java
@@ -32,6 +34,7 @@ C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\validators
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\repositories\VehicleTypeRepository.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\services\RoleService.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\controller\ReportsController.java
+C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\repositories\UserId.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\CustomLogin\SecurityServiceImpl.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\form\showIdCardList.java
 C:\Users\Kush.Dhawan\IdeaProjects\DIPH\src\main\java\com\dit\himachal\payload\UploadFileResponse.java

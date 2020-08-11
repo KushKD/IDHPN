@@ -2,6 +2,7 @@ package com.dit.himachal.services;
 
 import java.util.List;
 
+import com.dit.himachal.repositories.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,10 @@ public class UserService {
 	public UserEntity saveUser(UserEntity entity) {
 		return userRepository.save(entity);
 
+	}
+
+	public List<Object[] > getUserId(String username){
+		return userRepository.getUserID(username);
 	}
 
 }

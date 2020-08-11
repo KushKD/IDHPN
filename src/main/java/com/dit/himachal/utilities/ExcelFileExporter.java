@@ -1,5 +1,6 @@
 package com.dit.himachal.utilities;
 
+import com.dit.himachal.entities.VahanLog;
 import com.dit.himachal.entities.VehicleOwnerEntries;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -168,6 +169,120 @@ public class ExcelFileExporter {
             sheet.autoSizeColumn(13);
             sheet.autoSizeColumn(14);
             sheet.autoSizeColumn(15);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static ByteArrayInputStream getLogsExcel(List<VahanLog> vahanLogs) {
+        try(Workbook workbook = new XSSFWorkbook()){
+            Sheet sheet = workbook.createSheet("Logs");
+
+            // Create a new font and alter it.
+            Font font = workbook.createFont();
+            font.setFontHeightInPoints((short)14);
+            font.setFontName("Ariel");
+            font.setBold(true);
+
+            Font fontCell = workbook.createFont();
+            fontCell.setFontHeightInPoints((short)12);
+            fontCell.setFontName("Ariel");
+            fontCell.setBold(true);
+
+
+            Row row = sheet.createRow(0);
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+            headerCellStyle.setBorderBottom(BorderStyle.DOTTED);
+            headerCellStyle.setBorderLeft(BorderStyle.DOTTED);
+            headerCellStyle.setBorderRight(BorderStyle.DOTTED);
+            headerCellStyle.setBorderTop(BorderStyle.DOTTED);
+            headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
+            headerCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+            headerCellStyle.setFont(font);
+            ;
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            // Creating header
+
+            Cell cell = row.createCell(0);
+            CellStyle style = workbook.createCellStyle();
+            style.setAlignment(HorizontalAlignment.CENTER);
+            style.setVerticalAlignment(VerticalAlignment.CENTER);
+            style.setBorderBottom(BorderStyle.DOTTED);
+            style.setBorderLeft(BorderStyle.DOTTED);
+            style.setBorderRight(BorderStyle.DOTTED);
+            style.setBorderTop(BorderStyle.DOTTED);
+            cell.setCellValue("S.No");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+
+            cell = row.createCell(1);
+            cell.setCellValue("User Id");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(2);
+            cell.setCellValue("Ip Address");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(3);
+            cell.setCellValue("Vehicle Number");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(4);
+            cell.setCellValue("Response Code");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(5);
+            cell.setCellValue("Application Name");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(6);
+            cell.setCellValue("Function Name");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+//            cell = row.createCell(7);
+//            cell.setCellValue("Timestamp");
+//            cell.setCellStyle(headerCellStyle);
+//            style.setFont(fontCell);
+
+
+
+
+            // Creating data rows for each customer
+            for(int i = 0; i < vahanLogs.size(); i++) {
+                Row dataRow = sheet.createRow(i + 1);
+                dataRow.createCell(0).setCellValue(i+1);
+                dataRow.createCell(1).setCellValue(vahanLogs.get(i).getLogUserId());
+                dataRow.createCell(2).setCellValue(vahanLogs.get(i).getLogIpAddress());
+                dataRow.createCell(3).setCellValue(vahanLogs.get(i).getLogVehicleNumber());
+                dataRow.createCell(4).setCellValue(vahanLogs.get(i).getLogServiceResponseCode());
+                dataRow.createCell(5).setCellValue(vahanLogs.get(i).getLogApplicationName());
+                dataRow.createCell(6).setCellValue(vahanLogs.get(i).getLogFunctionName());
+              //  dataRow.createCell(7).setCellValue(vahanLogs.get(i));
+            }
+
+            // Making size of column auto resize to fit with data
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+            sheet.autoSizeColumn(3);
+            sheet.autoSizeColumn(4);
+            sheet.autoSizeColumn(5);
+            sheet.autoSizeColumn(6);
+           // sheet.autoSizeColumn(7);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             workbook.write(outputStream);

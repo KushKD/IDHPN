@@ -203,3 +203,19 @@ CREATE TABLE vehicle_in_out_trans (
 
 );
 
+
+-----
+CREATE TABLE log_vahan_service (
+    log_id serial PRIMARY KEY  NOT NULL,
+    log_user_id INTEGER NOT NULL,
+	log_ip_address  character varying(20),
+	log_service_response_code INTEGER NOT NULL,
+	log_vehicle_number character varying(40),
+	log_application_name character varying(40),
+	log_function_name character varying(40),
+    is_active boolean NOT NULL DEFAULT true,
+    createddate timestamp with time zone NOT NULL DEFAULT now(),
+    FOREIGN KEY (log_user_id) REFERENCES users(user_id)
+
+);
+

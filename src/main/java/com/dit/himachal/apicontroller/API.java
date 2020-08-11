@@ -7,6 +7,7 @@ import com.dit.himachal.modals.QRCodeDate;
 import com.dit.himachal.modals.UsePoJo;
 import com.dit.himachal.modals.VahanObject;
 import com.dit.himachal.payload.UploadFileResponse;
+import com.dit.himachal.repositories.VahanLogsRepository;
 import com.dit.himachal.services.*;
 import com.dit.himachal.utilities.Constants;
 import com.dit.himachal.utilities.GeneratePdfReport;
@@ -25,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,6 +37,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +80,9 @@ public class API {
 
     @Autowired
     private VehicleInOutService vehicleInOutService;
+
+    @Autowired
+    VahanLogsRepository vahanLogsRepository;
 
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -237,10 +244,20 @@ public class API {
     /**
      * Get Vehicle Details Via Service
      */
-    @RequestMapping(value = "/api/getVehicleDetails/{regNo}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> getVehicleDetailsViaVahan(@PathVariable("regNo") String registrationNumber) {
+    @RequestMapping(value = "/api/getVehicleDetails", method = RequestMethod.POST, consumes = "application/json",produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<?> getVehicleDetailsViaVahan(@RequestBody String jsondata ) {
         Map<String, Object> map = null;
         HTTP http = new HTTP();
+        String registrationNumber = null, ip = null, userId = null;
+        if(jsondata!=null && !jsondata.isEmpty()){
+            JsonObject o = new JsonParser().parse(jsondata).getAsJsonObject();
+            System.out.println(o.toString());
+            registrationNumber = o.getAsJsonObject().get("regNo").getAsString();
+            ip = o.getAsJsonObject().get("Ip").getAsString();
+            userId = o.getAsJsonObject().get("userId").getAsString();
+        }
+        VahanObject data = null;
         try {
             VahanObject object = new VahanObject();
 
@@ -249,14 +266,18 @@ public class API {
 
             object.setUrl(Constants.vahan);
             object.setParameters_to_send(registrationNumber);
-            VahanObject data = http.postData(object);
+             data = http.postData(object);
             if (data != null && data.getSuccessFail().equalsIgnoreCase("SUCCESS")) {
+             VahanLog log =   createLog(data,ip,userId);
+             vahanLogsRepository.save(log);
                 map = new HashMap<String, Object>();
                 map.put(Constants.keyResponse, data);
                 map.put(Constants.keyMessage, Constants.valueMessage);
                 map.put(Constants.keyStatus, HttpStatus.OK);
                 return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
             } else {
+                VahanLog log =   createLog(data,ip,userId);
+                vahanLogsRepository.save(log);
                 map = new HashMap<String, Object>();
                 map.put(Constants.keyResponse, data.getResponse());
                 map.put(Constants.keyMessage, Constants.valueMessage);
@@ -264,6 +285,8 @@ public class API {
                 return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
             }
         } catch (Exception ex) {
+            VahanLog log =   createLog(data,ip,userId);
+            vahanLogsRepository.save(log);
             map = new HashMap<String, Object>();
             map.put(Constants.keyResponse, "");
             map.put(Constants.keyMessage, ex.getLocalizedMessage().toString());
@@ -702,6 +725,28 @@ public class API {
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
+    }
+
+    private VahanLog createLog(VahanObject data, String clientIp, String userID) {
+
+        VahanLog Log = new VahanLog();
+        Log.setLogApplicationName("HP Transport ID");
+        Log.setLogFunctionName(data.getFunction_name());
+        Log.setLogIpAddress(clientIp);
+        if(data.getSuccessFail().equalsIgnoreCase("FALIURE")){
+            Log.setLogServiceResponseCode(404);
+        }else{
+            Log.setLogServiceResponseCode(200);
+        }
+
+
+        Log.setLogUserId(Long.valueOf(userID));
+        Log.setActive(true);
+        Log.setLogVehicleNumber(data.getParameters_to_send());
+
+
+
+        return Log;
     }
 
 }

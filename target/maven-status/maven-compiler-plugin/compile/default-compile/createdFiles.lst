@@ -10,6 +10,7 @@ com\dit\himachal\utilities\NetworkUtils$1.class
 com\dit\himachal\entities\StatesMaster.class
 com\dit\himachal\services\UserService.class
 com\dit\himachal\repositories\UserRepository.class
+com\dit\himachal\entities\VahanLog.class
 com\dit\himachal\entities\BarrierMaster.class
 com\dit\himachal\modals\RolesModal.class
 com\dit\himachal\apicontroller\API.class
@@ -73,12 +74,14 @@ com\dit\himachal\ServletInitializer.class
 com\dit\himachal\externalservices\SMSServices$1.class
 com\dit\himachal\repositories\VehicleOwnerEntriesRepository.class
 com\dit\himachal\CustomLogin\CustomUserService.class
+com\dit\himachal\repositories\UserId.class
 com\dit\himachal\utilities\ParseXML.class
 com\dit\himachal\entities\VehicleTypeMaster.class
 com\dit\himachal\form\VahanService.class
 com\dit\himachal\externalservices\DrivingLicence.class
 com\dit\himachal\ajax\AjaxContoller.class
 com\dit\himachal\repositories\RolesRepository.class
+com\dit\himachal\repositories\VahanLogsRepository.class
 com\dit\himachal\controller\VahanServiceController.class
 com\dit\himachal\exception\FileStorageException.class
 com\dit\himachal\entities\VehicleOwnerEntries.class

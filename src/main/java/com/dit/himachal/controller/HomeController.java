@@ -5,14 +5,17 @@ import com.dit.himachal.CustomLogin.SecurityService;
 import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.RolesEntity;
 import com.dit.himachal.entities.UserEntity;
+import com.dit.himachal.entities.VahanLog;
 import com.dit.himachal.entities.VehicleOwnerEntries;
 import com.dit.himachal.form.RegisterUser;
 import com.dit.himachal.form.RolesForm;
 import com.dit.himachal.form.SearchID;
 import com.dit.himachal.form.showIdCardList;
+import com.dit.himachal.repositories.VahanLogsRepository;
 import com.dit.himachal.services.RoleService;
 import com.dit.himachal.services.UserService;
 import com.dit.himachal.services.VehicleOwnerEntriesService;
+import com.dit.himachal.utilities.ExcelFileExporter;
 import com.dit.himachal.utilities.GeneratePdfReport;
 import com.dit.himachal.utilities.Utilities;
 import com.dit.himachal.validators.GenerateIdCardValidator;
@@ -22,11 +25,13 @@ import com.dit.himachal.validators.UserValidator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.qrcode.WriterException;
+import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -43,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -77,6 +83,9 @@ public class HomeController {
 
     @Autowired
     private SearchIdCardValidator searchIdCardValidator;
+
+    @Autowired
+    private VahanLogsRepository vahanLogsRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -302,6 +311,39 @@ public class HomeController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
+
+    }
+
+    @RequestMapping(value = "/getLogs", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void getIdCardList(Model model, HttpServletResponse response, HttpServletRequest request) {
+
+        try {
+
+            List<VahanLog> dataForReports = null;
+            dataForReports = new ArrayList<>();
+            dataForReports = (List<VahanLog>) vahanLogsRepository.findAll();
+
+
+            if (!dataForReports.isEmpty()) {
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition", "attachment; filename=logs.xlsx");
+                ByteArrayInputStream stream = ExcelFileExporter.getLogsExcel(dataForReports);
+                IOUtils.copy(stream, response.getOutputStream());
+                response.flushBuffer();
+
+            } else {
+
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition", "attachment; filename=Report_id_card.xlsx");
+                ByteArrayInputStream stream = ExcelFileExporter.getLogsExcel(dataForReports);
+                IOUtils.copy(stream, response.getOutputStream());
+                response.flushBuffer();
+            }
+
+
+        } catch (Exception ex) {
+        }
 
     }
 
