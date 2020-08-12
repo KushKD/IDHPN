@@ -253,6 +253,41 @@ public class ExcelFileExporter {
             cell.setCellStyle(headerCellStyle);
             style.setFont(fontCell);
 
+            cell = row.createCell(7);
+            cell.setCellValue("Engine Number");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(8);
+            cell.setCellValue("Chessis Number");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(9);
+            cell.setCellValue("RC Status");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(10);
+            cell.setCellValue("RC Regisered At ");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(11);
+            cell.setCellValue("RC Number");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(12);
+            cell.setCellValue("RC Fit Upto ");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
+            cell = row.createCell(13);
+            cell.setCellValue("RC Status As On Date");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
 //            cell = row.createCell(7);
 //            cell.setCellValue("Timestamp");
 //            cell.setCellStyle(headerCellStyle);
@@ -271,6 +306,13 @@ public class ExcelFileExporter {
                 dataRow.createCell(4).setCellValue(vahanLogs.get(i).getLogServiceResponseCode());
                 dataRow.createCell(5).setCellValue(vahanLogs.get(i).getLogApplicationName());
                 dataRow.createCell(6).setCellValue(vahanLogs.get(i).getLogFunctionName());
+                dataRow.createCell(7).setCellValue(vahanLogs.get(i).getEngineNumber());
+                dataRow.createCell(8).setCellValue(vahanLogs.get(i).getChassisNumber());
+                dataRow.createCell(9).setCellValue(vahanLogs.get(i).getRcStatus());
+                dataRow.createCell(10).setCellValue(vahanLogs.get(i).getRcRegisteredAt());
+                dataRow.createCell(11).setCellValue(vahanLogs.get(i).getRegNo());
+                dataRow.createCell(12).setCellValue(vahanLogs.get(i).getRcFitUpto());
+                dataRow.createCell(13).setCellValue(vahanLogs.get(i).getRcStatusAsOnDate());
               //  dataRow.createCell(7).setCellValue(vahanLogs.get(i));
             }
 
@@ -282,6 +324,14 @@ public class ExcelFileExporter {
             sheet.autoSizeColumn(4);
             sheet.autoSizeColumn(5);
             sheet.autoSizeColumn(6);
+            sheet.autoSizeColumn(7);
+            sheet.autoSizeColumn(8);
+            sheet.autoSizeColumn(9);
+            sheet.autoSizeColumn(10);
+            sheet.autoSizeColumn(11);
+            sheet.autoSizeColumn(12);
+            sheet.autoSizeColumn(13);
+
            // sheet.autoSizeColumn(7);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

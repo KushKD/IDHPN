@@ -80,17 +80,18 @@ public class VahanServiceController {
 
             if (data.getSuccessFail().equalsIgnoreCase("FALIURE")) {
                 //Save Data TODO
-                //  System.out.println(Utilities.getClientIp(request));
-                VahanLog logs = createLog(data,Utilities.getClientIp(request));
+                VehicleDetailsObject objectVehicle = null;
+                VahanLog logs = createLog(data,Utilities.getClientIp(request),objectVehicle);
                 vahanLogsRepository.save(logs);
                 model.addAttribute("serverError", data.getResponse());
                 vahanData.setParameter(data.getParameters_to_send());
                 return "vahanDetails";
             } else {
                 //Save Data TODO
-                VahanLog logs = createLog(data,Utilities.getClientIp(request));
-                vahanLogsRepository.save(logs);
+
                 VehicleDetailsObject objectVehicle = ParseXML.parseXml(data.getResponse());
+                VahanLog logs = createLog(data,Utilities.getClientIp(request),objectVehicle);
+                vahanLogsRepository.save(logs);
                 request.getSession().setAttribute("successMessage", "Request was successful.");
                 model.addAttribute("vehicledata", objectVehicle);
                 vahanData.setParameter(data.getParameters_to_send());
@@ -100,7 +101,8 @@ public class VahanServiceController {
 
         } catch (Exception ex) {
             //Save Data
-            VahanLog logs = createLog(data,Utilities.getClientIp(request));
+            VehicleDetailsObject objectVehicle = null;
+            VahanLog logs = createLog(data,Utilities.getClientIp(request),objectVehicle);
             vahanLogsRepository.save(logs);
             vahanData.setParameter("");
             model.addAttribute("serverError", ex.toString());
@@ -110,7 +112,7 @@ public class VahanServiceController {
 
     }
 
-    private VahanLog createLog(VahanObject data, String clientIp) {
+    private VahanLog createLog(VahanObject data, String clientIp, VehicleDetailsObject vObject) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
@@ -135,6 +137,23 @@ public class VahanServiceController {
             Log.setLogServiceResponseCode(404);
         }else{
             Log.setLogServiceResponseCode(200);
+        }
+        if(vObject!=null){
+                Log.setEngineNumber(vObject.getRcEngineNumber());
+                Log.setChassisNumber(vObject.getRcChassisNo());
+                Log.setRcStatus(vObject.getRcStatus());
+                Log.setRcRegisteredAt(vObject.getRcRegisteredAt());
+                Log.setRegNo(vObject.getRcRegistrationNo());
+                Log.setRcFitUpto(vObject.getRcFitUpto());
+                Log.setRcStatusAsOnDate(vObject.getRcStatusAsOn());
+        }else{
+            Log.setEngineNumber("");
+            Log.setChassisNumber("");
+            Log.setRcStatus("");
+            Log.setRcRegisteredAt("");
+            Log.setRegNo("");
+            Log.setRcFitUpto("");
+            Log.setRcStatusAsOnDate("");
         }
         
         

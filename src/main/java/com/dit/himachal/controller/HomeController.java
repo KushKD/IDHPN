@@ -314,9 +314,9 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "/getLogs", method = RequestMethod.GET)
+    @RequestMapping(value = "/getVahanLogs", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    public void getIdCardList(Model model, HttpServletResponse response, HttpServletRequest request) {
+    public void getVahanLogs(Model model, HttpServletResponse response, HttpServletRequest request) {
 
         try {
 

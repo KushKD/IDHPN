@@ -6,13 +6,11 @@ import com.dit.himachal.externalservices.SMSServices;
 import com.dit.himachal.modals.QRCodeDate;
 import com.dit.himachal.modals.UsePoJo;
 import com.dit.himachal.modals.VahanObject;
+import com.dit.himachal.modals.VehicleDetailsObject;
 import com.dit.himachal.payload.UploadFileResponse;
 import com.dit.himachal.repositories.VahanLogsRepository;
 import com.dit.himachal.services.*;
-import com.dit.himachal.utilities.Constants;
-import com.dit.himachal.utilities.GeneratePdfReport;
-import com.dit.himachal.utilities.Utilities;
-import com.dit.himachal.utilities.random24;
+import com.dit.himachal.utilities.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -262,21 +260,21 @@ public class API {
             VahanObject object = new VahanObject();
 
             object.setFunction_name(Constants.getCarDetailsVahan);
-
-
             object.setUrl(Constants.vahan);
             object.setParameters_to_send(registrationNumber);
              data = http.postData(object);
             if (data != null && data.getSuccessFail().equalsIgnoreCase("SUCCESS")) {
-             VahanLog log =   createLog(data,ip,userId);
+                VehicleDetailsObject objectVehicle = ParseXML.parseXml(data.getResponse());
+             VahanLog log =   createLog(data,ip,userId,objectVehicle);
              vahanLogsRepository.save(log);
                 map = new HashMap<String, Object>();
-                map.put(Constants.keyResponse, data);
+                map.put(Constants.keyResponse, objectVehicle);
                 map.put(Constants.keyMessage, Constants.valueMessage);
                 map.put(Constants.keyStatus, HttpStatus.OK);
                 return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
             } else {
-                VahanLog log =   createLog(data,ip,userId);
+                VehicleDetailsObject objectVehicle = null;
+                VahanLog log =   createLog(data,ip,userId,objectVehicle);
                 vahanLogsRepository.save(log);
                 map = new HashMap<String, Object>();
                 map.put(Constants.keyResponse, data.getResponse());
@@ -285,7 +283,8 @@ public class API {
                 return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
             }
         } catch (Exception ex) {
-            VahanLog log =   createLog(data,ip,userId);
+            VehicleDetailsObject objectVehicle = null;
+            VahanLog log =   createLog(data,ip,userId,objectVehicle);
             vahanLogsRepository.save(log);
             map = new HashMap<String, Object>();
             map.put(Constants.keyResponse, "");
@@ -727,7 +726,7 @@ public class API {
 
     }
 
-    private VahanLog createLog(VahanObject data, String clientIp, String userID) {
+    private VahanLog createLog(VahanObject data, String clientIp, String userID,  VehicleDetailsObject vObject) {
 
         VahanLog Log = new VahanLog();
         Log.setLogApplicationName("HP Transport ID");
@@ -737,6 +736,23 @@ public class API {
             Log.setLogServiceResponseCode(404);
         }else{
             Log.setLogServiceResponseCode(200);
+        }
+        if(vObject!=null){
+            Log.setEngineNumber(vObject.getRcEngineNumber());
+            Log.setChassisNumber(vObject.getRcChassisNo());
+            Log.setRcStatus(vObject.getRcStatus());
+            Log.setRcRegisteredAt(vObject.getRcRegisteredAt());
+            Log.setRegNo(vObject.getRcRegistrationNo());
+            Log.setRcFitUpto(vObject.getRcFitUpto());
+            Log.setRcStatusAsOnDate(vObject.getRcStatusAsOn());
+        }else{
+            Log.setEngineNumber("");
+            Log.setChassisNumber("");
+            Log.setRcStatus("");
+            Log.setRcRegisteredAt("");
+            Log.setRegNo("");
+            Log.setRcFitUpto("");
+            Log.setRcStatusAsOnDate("");
         }
 
 

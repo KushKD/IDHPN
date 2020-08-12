@@ -205,3 +205,28 @@ ALTER TABLE  mst_vehicle_owner_entries ADD COLUMN vehicle_driver_address charact
 ALTER TABLE  mst_vehicle_owner_entries ADD COLUMN card_created_on character varying (255);
 
 -- Change Integer to bigint vehicle_owne_entries and transInout
+
+--Logs Table
+CREATE TABLE log_vahan_service (
+    log_id serial PRIMARY KEY  NOT NULL,
+    log_user_id INTEGER NOT NULL,
+	log_ip_address  character varying(20),
+	log_service_response_code INTEGER NOT NULL,
+	log_vehicle_number character varying(40),
+	log_application_name character varying(40),
+	log_function_name character varying(40),
+    is_active boolean NOT NULL DEFAULT true,
+    createddate timestamp with time zone NOT NULL DEFAULT now(),
+    FOREIGN KEY (log_user_id) REFERENCES users(user_id)
+
+);
+
+-- Change Integer to BigInt log_id
+
+ALTER TABLE  log_vahan_service ADD COLUMN engine_number character varying (255);
+ALTER TABLE  log_vahan_service ADD COLUMN chassis_number character varying (255);
+ALTER TABLE  log_vahan_service ADD COLUMN rc_status character varying (255);
+ALTER TABLE  log_vahan_service ADD COLUMN rc_registered_at character varying (255);
+ALTER TABLE  log_vahan_service ADD COLUMN reg_no character varying (255);
+ALTER TABLE  log_vahan_service ADD COLUMN rc_fit_upto character varying (255);
+ALTER TABLE  log_vahan_service ADD COLUMN rc_status_as_on_date character varying (255);
