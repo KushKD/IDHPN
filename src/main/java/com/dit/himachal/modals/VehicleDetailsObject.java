@@ -24,6 +24,15 @@ public class VehicleDetailsObject implements Serializable {
     private String rcRegisteredAt;
     private String rcStatus;
     private String rcStatusAsOn;
+    private String rcOwnerName;
+
+    public String getRcOwnerName() {
+        return rcOwnerName;
+    }
+
+    public void setRcOwnerName(String rcOwnerName) {
+        this.rcOwnerName = rcOwnerName;
+    }
 
     public String getRcRegistrationNo() {
         return rcRegistrationNo;
@@ -91,6 +100,7 @@ public class VehicleDetailsObject implements Serializable {
                 ", rcRegisteredAt='" + rcRegisteredAt + '\'' +
                 ", rcStatus='" + rcStatus + '\'' +
                 ", rcStatusAsOn='" + rcStatusAsOn + '\'' +
+                ", rcOwnerName='" + rcOwnerName + '\'' +
                 '}';
     }
 }

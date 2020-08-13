@@ -745,6 +745,7 @@ public class API {
             Log.setRegNo(vObject.getRcRegistrationNo());
             Log.setRcFitUpto(vObject.getRcFitUpto());
             Log.setRcStatusAsOnDate(vObject.getRcStatusAsOn());
+            Log.setRcOwnerName(vObject.getRcOwnerName());
         }else{
             Log.setEngineNumber("");
             Log.setChassisNumber("");
@@ -753,6 +754,7 @@ public class API {
             Log.setRegNo("");
             Log.setRcFitUpto("");
             Log.setRcStatusAsOnDate("");
+            Log.setRcOwnerName("");
         }
 
 

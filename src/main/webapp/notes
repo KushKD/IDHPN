@@ -230,3 +230,6 @@ ALTER TABLE  log_vahan_service ADD COLUMN rc_registered_at character varying (10
 ALTER TABLE  log_vahan_service ADD COLUMN reg_no character varying (100);
 ALTER TABLE  log_vahan_service ADD COLUMN rc_fit_upto character varying (100);
 ALTER TABLE  log_vahan_service ADD COLUMN rc_status_as_on_date character varying (100);
+
+-- Changes Table
+ALTER TABLE  log_vahan_service ADD COLUMN rc_owner_name character varying (100);

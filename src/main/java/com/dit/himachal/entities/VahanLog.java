@@ -61,6 +61,17 @@ public class VahanLog implements Serializable {
 	@Column(name = "is_active")
 	private boolean isActive;
 
+	@Column(name = "rc_owner_name")
+	private String rcOwnerName;
+
+
+	public String getRcOwnerName() {
+		return rcOwnerName;
+	}
+
+	public void setRcOwnerName(String rcOwnerName) {
+		this.rcOwnerName = rcOwnerName;
+	}
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
@@ -204,6 +215,7 @@ public class VahanLog implements Serializable {
 				", rcFitUpto='" + rcFitUpto + '\'' +
 				", rcStatusAsOnDate='" + rcStatusAsOnDate + '\'' +
 				", isActive=" + isActive +
+				", rcOwnerName='" + rcOwnerName + '\'' +
 				'}';
 	}
 }

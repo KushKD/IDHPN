@@ -68,13 +68,16 @@
                   <section class="invoice">
                           		  <div class="row invoice-info">
                                      <div class="col-8">
+
                                      <b>Registration Number:</b> ${vehicledata.rcRegistrationNo} <br>
+                                     <b>RC Owner Name:</b> ${vehicledata.rcOwnerName} <br>
                                      <b>Chassis Number:</b> ${vehicledata.rcChassisNo} <br>
                                      <b>Engine Number:</b> ${vehicledata.rcEngineNumber} <br>
                                      <b>RC Fit Upto:</b> ${vehicledata.rcFitUpto} <br>
                                      <b>RC Registered At:</b> ${vehicledata.rcRegisteredAt} <br>
                                       <b>RC Status:</b> ${vehicledata.rcStatus} <br>
                                        <b>RC Status As On At:</b> ${vehicledata.rcStatusAsOn} <br>
+
                                      </div>
                                       </div>
                                       </section>

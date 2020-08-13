@@ -288,6 +288,11 @@ public class ExcelFileExporter {
             cell.setCellStyle(headerCellStyle);
             style.setFont(fontCell);
 
+            cell = row.createCell(14);
+            cell.setCellValue("RC Owner Name");
+            cell.setCellStyle(headerCellStyle);
+            style.setFont(fontCell);
+
 //            cell = row.createCell(7);
 //            cell.setCellValue("Timestamp");
 //            cell.setCellStyle(headerCellStyle);
@@ -313,6 +318,7 @@ public class ExcelFileExporter {
                 dataRow.createCell(11).setCellValue(vahanLogs.get(i).getRegNo());
                 dataRow.createCell(12).setCellValue(vahanLogs.get(i).getRcFitUpto());
                 dataRow.createCell(13).setCellValue(vahanLogs.get(i).getRcStatusAsOnDate());
+                dataRow.createCell(13).setCellValue(vahanLogs.get(i).getRcOwnerName());
               //  dataRow.createCell(7).setCellValue(vahanLogs.get(i));
             }
 
@@ -331,6 +337,7 @@ public class ExcelFileExporter {
             sheet.autoSizeColumn(11);
             sheet.autoSizeColumn(12);
             sheet.autoSizeColumn(13);
+            sheet.autoSizeColumn(14);
 
            // sheet.autoSizeColumn(7);
 

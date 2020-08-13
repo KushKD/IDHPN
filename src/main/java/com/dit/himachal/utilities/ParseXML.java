@@ -43,6 +43,7 @@ public class ParseXML {
                 data.setRcStatus(elem.getElementsByTagName("rc_status").item(0).getTextContent());
                 data.setRcRegistrationNo(elem.getElementsByTagName("rc_regn_no").item(0).getTextContent());
                 data.setRcStatusAsOn(elem.getElementsByTagName("rc_status_as_on").item(0).getTextContent());
+                data.setRcOwnerName(elem.getElementsByTagName("rc_owner_name").item(0).getTextContent());
                 System.out.println(data.toString());
 
                 vehicleDetails.add(data);
