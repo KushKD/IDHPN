@@ -82,6 +82,30 @@ public class NetworkUtils {
         return conn;
     }
 
+    public static HttpURLConnection getSarthiInputStreamConnection(String url) {
+        HttpURLConnection conn = null;
+        try {
+            URL url_ = new URL(url);
+            conn = (HttpURLConnection) url_.openConnection();
+//            if (url_.toString().startsWith("https")) {
+//                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) conn;
+//                httpsURLConnection.setSSLSocketFactory(getSSLSocketFactory());
+//        }
+            //    conn = (HttpURLConnection) url_.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod("GET");
+            conn.setUseCaches(false);
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setInstanceFollowRedirects(true);
+            conn.connect();
+        } catch (Exception e) {
+
+        }
+        return conn;
+    }
+
     /**
      * @param conn_
      * @return

@@ -74,12 +74,12 @@ window.addEventListener('popstate', function(event) {
            </div>
          </div>
   </sec:authorize>
-<!--
+
   <sec:authorize access="hasAuthority('ADMIN')">
       <div class="col-md-6 col-lg-3">
              <div class="widget-small danger coloured-icon"><i class="icon fa fa-id-card fa-3x"></i>
                <div class="info">
-                <a href="${pageContext.request.contextPath}/generateReport" style=" text-decoration: none !important;">
+                <a href="${pageContext.request.contextPath}/saarthiService" style=" text-decoration: none !important;">
                               <h4>Driving Licence Service</h4></a>
 
                </div>
@@ -87,7 +87,7 @@ window.addEventListener('popstate', function(event) {
            </div>
     </sec:authorize>
 
-    -->
+
 
 
       </div>

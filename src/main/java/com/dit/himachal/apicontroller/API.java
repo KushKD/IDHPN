@@ -3,10 +3,7 @@ package com.dit.himachal.apicontroller;
 import com.dit.himachal.HTTP;
 import com.dit.himachal.entities.*;
 import com.dit.himachal.externalservices.SMSServices;
-import com.dit.himachal.modals.QRCodeDate;
-import com.dit.himachal.modals.UsePoJo;
-import com.dit.himachal.modals.VahanObject;
-import com.dit.himachal.modals.VehicleDetailsObject;
+import com.dit.himachal.modals.*;
 import com.dit.himachal.payload.UploadFileResponse;
 import com.dit.himachal.repositories.VahanLogsRepository;
 import com.dit.himachal.services.*;
@@ -294,6 +291,40 @@ public class API {
         }
 
     }
+
+
+    /**
+     * Saarthi Service
+     */
+    @RequestMapping(value = "/api/getDlDetails/{dl}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> getDLDetails(@PathVariable("dl") String dl) {
+        Map<String, Object> map = null;
+        try {
+            HTTP http = new HTTP();
+            SaarthiObject object = http.getSarthiData(dl);
+            if (!Utilities.positiveNegitive(object.getErrorCode())) {
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, object);
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            } else {
+                map = new HashMap<String, Object>();
+                map.put(Constants.keyResponse, object);
+                map.put(Constants.keyMessage, Constants.valueMessage);
+                map.put(Constants.keyStatus, HttpStatus.OK);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
+        } catch (Exception ex) {
+            map = new HashMap<String, Object>();
+            map.put(Constants.keyResponse, "");
+            map.put(Constants.keyMessage, ex.getLocalizedMessage().toString());
+            map.put(Constants.keyStatus, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
 
     /**

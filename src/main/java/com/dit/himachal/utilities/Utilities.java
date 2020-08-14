@@ -1,7 +1,9 @@
 package com.dit.himachal.utilities;
 
 
-
+import com.dit.himachal.modals.SaarthiObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,9 +31,7 @@ public class Utilities {
     }
 
 
-
-
-    public static final String getPhotoUrl(String imageName){
+    public static final String getPhotoUrl(String imageName) {
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
                 .path(imageName)
@@ -58,7 +58,7 @@ public class Utilities {
         return false;
     }
 
-    public static String getClientIp(HttpServletRequest  request) {
+    public static String getClientIp(HttpServletRequest request) {
         String remoteAddr = "";
 
         if (request != null) {
@@ -69,6 +69,38 @@ public class Utilities {
         }
 
         return remoteAddr;
+    }
+
+
+    public static boolean positiveNegitive(Integer number) {
+        if (number > 0) {
+            return true;
+        } else if (number < 0) {
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    public static SaarthiObject parseJson(String data){
+        SaarthiObject object = null;
+        if(data!=null){
+            object = new SaarthiObject();
+            JsonObject o = new JsonParser().parse(data).getAsJsonObject();
+            System.out.println(o.toString());
+            object.setDlLicName(o.getAsJsonObject().get("name").getAsString());
+            object.setDlLicNum(o.getAsJsonObject().get("dlLicnum").getAsString());
+            object.setDlLicStatus(o.getAsJsonObject().get("status").getAsString());
+            object.setDlNonTransValidTill(o.getAsJsonObject().get("dlNonTransValdTill").getAsString());
+            object.setErrorCode(o.getAsJsonObject().get("errorcode").getAsInt());
+            object.setErrorMessage(o.getAsJsonObject().get("errormsg").getAsString());
+            object.setIssuing_authority(o.getAsJsonObject().get("issuing_Authority").getAsString());
+            object.setDlTransValidTill(o.getAsJsonObject().get("dlTransValdTill").getAsString());
+
+        }
+
+
+        return object;
     }
 
 

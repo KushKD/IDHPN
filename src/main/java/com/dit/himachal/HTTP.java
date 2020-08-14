@@ -1,17 +1,22 @@
 package com.dit.himachal;
 
+import com.dit.himachal.modals.SaarthiObject;
 import com.dit.himachal.modals.VahanObject;
 import com.dit.himachal.security.CryptographyAES;
 import com.dit.himachal.utilities.Constants;
 import com.dit.himachal.utilities.NetworkUtils;
+import com.dit.himachal.utilities.Utilities;
 import com.google.gson.JsonObject;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.security.InvalidAlgorithmParameterException;
@@ -23,7 +28,7 @@ public class HTTP {
     CryptographyAES AES = new CryptographyAES();
 
     /**
-     * GET Data
+     * Post Data
      */
     public VahanObject postData(VahanObject object) {
         HttpURLConnection conn_ = null;
@@ -86,6 +91,52 @@ public class HTTP {
                 conn_.disconnect();
         }
         return returnObject;
+    }
+
+    /**
+     * Get DATA
+     */
+    public SaarthiObject getSarthiData(String drivingLicence) throws IOException {
+        HttpURLConnection conn_ = null;
+        StringBuilder sb = null;
+        SaarthiObject object = null;
+        byte[]   us = Base64.encodeBase64(Constants.usesr.getBytes());
+        byte[]   ps = Base64.encodeBase64(Constants.password.getBytes());
+        byte[]   dl = Base64.encodeBase64(drivingLicence.getBytes());
+
+        conn_ = NetworkUtils.getSarthiInputStreamConnection(Constants.SaarthiURL+ new String(dl)+"/"+
+                new String(us)+"/"+
+                new String(ps)+"");
+
+        if (conn_.getResponseCode() != 200) {
+            BufferedReader br = new BufferedReader(new
+                    InputStreamReader((conn_.getErrorStream())));
+            String output;
+            System.out.println("Output from Server error ....  \n");
+
+                while ((output = br.readLine()) != null) {
+                    sb.append(output + "\n");
+                }
+                br.close();
+                System.out.println("Error==  "+ sb.toString());
+                //Parse Json Here
+           object = Utilities.parseJson(sb.toString());
+                return object;
+
+        }
+        BufferedReader br = new BufferedReader(new
+                InputStreamReader((conn_.getInputStream())));
+        String output = null;
+        System.out.println("Output from Server ....  \n");
+        while ((output = br.readLine()) != null) {
+            System.out.println(output);
+            sb.append(output + "\n");
+
+        }
+        br.close();
+        object = Utilities.parseJson(sb.toString());
+        return object;
+
     }
 
 }
