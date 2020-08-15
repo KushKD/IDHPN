@@ -60,6 +60,10 @@
         <put-attribute name="content" value="/WEB-INF/jsp/vahanDetails.jsp" />
     </definition>
 
+    <definition name="sarthiDetail" extends="baselayoutdashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/sarthiDetails.jsp" />
+    </definition>
+
 
 
 

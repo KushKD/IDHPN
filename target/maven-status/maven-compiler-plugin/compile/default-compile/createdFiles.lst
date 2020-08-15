@@ -1,3 +1,4 @@
+com\dit\himachal\controller\SaarthiServiceController.class
 com\dit\himachal\utilities\NetworkUtils.class
 com\dit\himachal\configuration\TilesConfiguration.class
 com\dit\himachal\repositories\VehicleOwnerDocumentsRepository.class
@@ -10,6 +11,8 @@ com\dit\himachal\utilities\NetworkUtils$1.class
 com\dit\himachal\entities\StatesMaster.class
 com\dit\himachal\services\UserService.class
 com\dit\himachal\repositories\UserRepository.class
+com\dit\himachal\form\SaarthiForm.class
+com\dit\himachal\modals\SaarthiObject.class
 com\dit\himachal\entities\VahanLog.class
 com\dit\himachal\entities\BarrierMaster.class
 com\dit\himachal\modals\RolesModal.class
@@ -70,6 +73,7 @@ com\dit\himachal\services\RoleService.class
 com\dit\himachal\utilities\GeneratePdfReport.class
 com\dit\himachal\form\RegisterUser.class
 com\dit\himachal\utilities\NetworkUtils$2.class
+com\dit\himachal\validators\SaarthiServiceValidator.class
 com\dit\himachal\ServletInitializer.class
 com\dit\himachal\externalservices\SMSServices$1.class
 com\dit\himachal\repositories\VehicleOwnerEntriesRepository.class

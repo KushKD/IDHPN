@@ -46,9 +46,9 @@ public class SaarthiServiceController {
 
         //TODO
         System.out.println(saarthiData.toString());
-        SaarthiObject result = http.getSarthiData(saarthiData.getDlNumber().trim());
+        SaarthiObject result = http.GetData(saarthiData.getDlNumber().trim());
 
-        if (Utilities.positiveNegitive(result.getErrorCode())) {
+        if (!Utilities.positiveNegitive(result.getErrorCode())) {
             model.addAttribute("serverError", result.getErrorMessage());
             saarthiData.setDlNumber(saarthiData.getDlNumber());
             return "sarthiDetail";

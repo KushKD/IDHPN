@@ -301,7 +301,7 @@ public class API {
         Map<String, Object> map = null;
         try {
             HTTP http = new HTTP();
-            SaarthiObject object = http.getSarthiData(dl);
+            SaarthiObject object = http.GetData(dl);
             if (!Utilities.positiveNegitive(object.getErrorCode())) {
                 map = new HashMap<String, Object>();
                 map.put(Constants.keyResponse, object);

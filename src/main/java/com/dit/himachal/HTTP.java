@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 
@@ -130,13 +131,71 @@ public class HTTP {
         System.out.println("Output from Server ....  \n");
         while ((output = br.readLine()) != null) {
             System.out.println(output);
-            sb.append(output + "\n");
+           // sb.append(output + "\n");
 
         }
         br.close();
-        object = Utilities.parseJson(sb.toString());
+        object = Utilities.parseJson(output);
         return object;
 
     }
+
+    public SaarthiObject GetData(String drivingLicence) {
+        HttpURLConnection conn_ = null;
+        BufferedReader reader = null;
+        SaarthiObject object = null;
+        byte[]   us = Base64.encodeBase64(Constants.usesr.getBytes());
+        byte[]   ps = Base64.encodeBase64(Constants.password.getBytes());
+        byte[]   dl = Base64.encodeBase64(drivingLicence.getBytes());
+
+
+
+        try {
+            conn_ = NetworkUtils.getSarthiInputStreamConnection(Constants.SaarthiURL+ new String(dl)+"/"+
+                    new String(us)+"/"+
+                    new String(ps)+"");
+
+            if (conn_.getResponseCode() != 200) {
+                reader = new BufferedReader(new InputStreamReader(conn_.getErrorStream()));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                conn_.disconnect();
+                object = Utilities.parseJson(sb.toString());
+                return object;
+            } else {
+
+
+                reader = new BufferedReader(new InputStreamReader(conn_.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                conn_.disconnect();
+                object = Utilities.parseJson(sb.toString());
+                return object;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            object = null;
+            return object;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    object = null;
+                    return object;
+                }
+            }
+        }
+    }
+
 
 }
