@@ -32,8 +32,13 @@ public class Constants {
             "Xf+46E4cnMCbvzP1iaR7LopU9GoFxzo/IyFKlVafxtDQKmek5A02eJVvqFS+GYAGCoki5vj4Opz9 CQNFLP+CBNKco4S7ejKsrAnGdArffOJiJEmrHgbJK20x7/r+LFTYoHx6z0qGibizPPsoJCNDY6G0 92ioTEcAXPKpW4uk1qS/F35xhk77wBWwek5aYInrmjNroki6ZwW49+1bGYmCg9UQfJ7endepaTKM TQFsj1i543W/F2ZGVNGDnghZhDhSvJfLmCIwFhH973rvl3A+RdVqIC9ChWT89xMOweejP2WhlkVl SBIDigexO7DQMOQ6DuLKKBFjhPUwU2zkcHfz9mn1+f6MrfhmGWzB7L3xHrYd4qjdw/PjvgvwcJAo KIHJ04axV37Zi79QD7z8R7+bvfbaOvCsl5a8ErEPzrAJ3j0iq3k/3DcY8d5tI26DCS8IRIA6M2Zf WFmEOvckzpkzaOetgk1jklxiTMc7JTZHdskMpAvPygZwCu97H5T+pEXCRQ/7sMcTtSiZKVPydgwW sRKw7IhlCbCSXPs47yWdwJJFx6p90HRbmHVbPkESY0REJ/VS8hEUR1rFRcS42Natydz9XfRVpTpW wBUhG0/3Znt7Uj9rvxIpH/gYFjunDw3Q";
 
     //Saarthi
-    public static final String SaarthiURL = "http://164.100.94.236:8080/SarathiReport/rsServices/sarathi/service/getLicenseData/";
-    public static final String usesr = "HP_OnlineSewa";
+   public static final String usesr = "HP_OnlineSewa";
     public static final String password = "02a1faeb78fcca5f13243d13094350e4";
+
+    public static final String SaarthiURLL = "https://sarathi.parivahan.gov.in/SarathiReport/rsServices/sarathi/service/getLicenseData/";
+
+
+
+
 
 }

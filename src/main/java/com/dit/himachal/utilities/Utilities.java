@@ -74,7 +74,7 @@ public class Utilities {
 
 
     public static boolean positiveNegitive(Integer number) {
-        if (number > 0) {
+        if (number >= 0) {
             return true;
         } else if (number < 0) {
             return false;
@@ -83,9 +83,9 @@ public class Utilities {
         }
     }
 
-    public static SaarthiObject parseJson(String data){
+    public static SaarthiObject parseJson(String data) {
         SaarthiObject object = null;
-        if(data!=null){
+        if (data != null) {
             object = new SaarthiObject();
             JsonObject o = new JsonParser().parse(data).getAsJsonObject();
             System.out.println(o.toString());
@@ -144,8 +144,6 @@ public class Utilities {
 
         return object;
     }
-
-
 
 
 }

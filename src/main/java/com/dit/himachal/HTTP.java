@@ -105,7 +105,7 @@ public class HTTP {
         byte[]   ps = Base64.encodeBase64(Constants.password.getBytes());
         byte[]   dl = Base64.encodeBase64(drivingLicence.getBytes());
 
-        conn_ = NetworkUtils.getSarthiInputStreamConnection(Constants.SaarthiURL+ new String(dl)+"/"+
+        conn_ = NetworkUtils.getSarthiInputStreamConnection(Constants.SaarthiURLL+ new String(dl)+"/"+
                 new String(us)+"/"+
                 new String(ps)+"");
 
@@ -151,7 +151,7 @@ public class HTTP {
 
 
         try {
-            conn_ = NetworkUtils.getSarthiInputStreamConnection(Constants.SaarthiURL+ new String(dl)+"/"+
+            conn_ = NetworkUtils.getSarthiInputStreamConnection(Constants.SaarthiURLL+ new String(dl)+"/"+
                     new String(us)+"/"+
                     new String(ps)+"");
 
