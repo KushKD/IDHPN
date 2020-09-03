@@ -103,6 +103,12 @@ public class VehicleOwnerEntriesService {
 		return vehicleOwnerEntriesRepository.getReportDistrictBarrierOwnerTypeVehicleType(districtId,barrierId, vehicleType, ownerType);
 	}
 
+	//OnlyDistrict  getReportDistrictType  TO DO
+	public List<VehicleOwnerEntries> getReportCompleteDistrict(Integer districtId){
+		return vehicleOwnerEntriesRepository.getReportDistrictType(districtId);
+	}
+
+
 
 
 }

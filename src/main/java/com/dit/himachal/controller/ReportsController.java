@@ -42,8 +42,8 @@ public class ReportsController {
 
     @RequestMapping(value = "/getReports", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void  getIdCardList(@ModelAttribute("reportsForm") ReportsForm reportsForm,
-                                       BindingResult bindingResult, Model model, HttpServletResponse response, HttpServletRequest request) {
+    public void getIdCardList(@ModelAttribute("reportsForm") ReportsForm reportsForm,
+                              BindingResult bindingResult, Model model, HttpServletResponse response, HttpServletRequest request) {
         generateReportsValidator.validate(reportsForm, bindingResult);
 
 //        if (bindingResult.hasErrors()) {
@@ -184,26 +184,67 @@ public class ReportsController {
                     IOUtils.copy(stream, response.getOutputStream());
                     response.flushBuffer();
                     //ExcelView view = new ExcelView(dataForReports);
-                   // return new ModelAndView("reports");
-                   // return new ModelAndView(new ExcelView(),"data", dataForReports);
+                    // return new ModelAndView("reports");
+                    // return new ModelAndView(new ExcelView(),"data", dataForReports);
                 } else {
                     model.addAttribute("barrierid", reportsForm.getBarrierId());
                     model.addAttribute("districtid", reportsForm.getDistrictId());
                     model.addAttribute("vid", reportsForm.getVehicleType());
                     model.addAttribute("oid", reportsForm.getOwnerType());
 
-                   // model.addAttribute("serverError", "No Data available for the current District and Barrier");
-                  //  return new ModelAndView("reports");
+                    // model.addAttribute("serverError", "No Data available for the current District and Barrier");
+                    //  return new ModelAndView("reports");
                     response.setContentType("application/octet-stream");
                     response.setHeader("Content-Disposition", "attachment; filename=Report_id_card.xlsx");
                     ByteArrayInputStream stream = ExcelFileExporter.contactListToExcelFile(dataForReports);
                     IOUtils.copy(stream, response.getOutputStream());
                     response.flushBuffer();
                 }
-            } else {
-                model.addAttribute("serverError", "No Select  District and Barrier");
+            } else if (Utilities.ifEmptyField(reportsForm.getDistrictId())) {
+                System.out.println(reportsForm.getDistrictId());
 
-               // return new ModelAndView("reports");
+                List<VehicleOwnerEntries> dataForReports = null;
+                dataForReports = new ArrayList<>();
+                dataForReports = vehicleOwnerEntriesService.getReportCompleteDistrict(Integer.parseInt(reportsForm.getDistrictId()));
+
+                if (!dataForReports.isEmpty()) {
+                    request.getSession().setAttribute("successMessage", "Data found Successfully");
+                    //  model.addAttribute("vehicledata", data);
+                    model.addAttribute("barrierid", reportsForm.getBarrierId());
+                    model.addAttribute("districtid", reportsForm.getDistrictId());
+                    model.addAttribute("vid", reportsForm.getVehicleType());
+                    model.addAttribute("oid", reportsForm.getOwnerType());
+
+                    response.setContentType("application/octet-stream");
+                    response.setHeader("Content-Disposition", "attachment; filename=Report_id_card.xlsx");
+                    ByteArrayInputStream stream = ExcelFileExporter.contactListToExcelFile(dataForReports);
+                    IOUtils.copy(stream, response.getOutputStream());
+                    response.flushBuffer();
+                    //ExcelView view = new ExcelView(dataForReports);
+                    // return new ModelAndView("reports");
+                    // return new ModelAndView(new ExcelView(),"data", dataForReports);
+                } else {
+                    model.addAttribute("barrierid", reportsForm.getBarrierId());
+                    model.addAttribute("districtid", reportsForm.getDistrictId());
+                    model.addAttribute("vid", reportsForm.getVehicleType());
+                    model.addAttribute("oid", reportsForm.getOwnerType());
+
+                    // model.addAttribute("serverError", "No Data available for the current District and Barrier");
+                    //  return new ModelAndView("reports");
+                    response.setContentType("application/octet-stream");
+                    response.setHeader("Content-Disposition", "attachment; filename=Report_id_card.xlsx");
+                    ByteArrayInputStream stream = ExcelFileExporter.contactListToExcelFile(dataForReports);
+                    IOUtils.copy(stream, response.getOutputStream());
+                    response.flushBuffer();
+                }
+
+
+
+
+            } else {
+                model.addAttribute("serverError", "Select  District and Barrier");
+
+                // return new ModelAndView("reports");
             }
 
 
@@ -211,7 +252,7 @@ public class ReportsController {
             reportsForm.setFromDate("");
             reportsForm.setToDate("");
             model.addAttribute("serverError", ex.toString());
-           // return new ModelAndView("reports");
+            // return new ModelAndView("reports");
         }
 
     }

@@ -63,6 +63,7 @@ window.addEventListener('popstate', function(event) {
         </div>
  </sec:authorize>
 
+<!--
  <sec:authorize access="hasAuthority('ADMIN')">
     <div class="col-md-6 col-lg-3">
            <div class="widget-small warning coloured-icon"><i class="icon fa fa-bus fa-3x"></i>
@@ -87,7 +88,7 @@ window.addEventListener('popstate', function(event) {
            </div>
     </sec:authorize>
 
-
+-->
 
 
       </div>

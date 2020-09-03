@@ -88,6 +88,9 @@ public interface VehicleOwnerEntriesRepository extends CrudRepository<VehicleOwn
                                                                            @Param("vehicleType") Integer vehicleType,
                                                                     @Param("ownerType") Integer ownerType);
 
+    @Query(value = "select * from public.mst_vehicle_owner_entries where  district_id=:districtId   AND active = true  order by createddate desc", nativeQuery = true)
+    List<VehicleOwnerEntries> getReportDistrictType(@Param("districtId") Integer districtId);
+
 }
 
 
