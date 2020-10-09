@@ -87,6 +87,12 @@ public class HTTP {
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
             e.printStackTrace();
+
+            returnObject.setResponse(e.getLocalizedMessage());
+            returnObject.setSuccessFail("FALIURE");
+            returnObject.setFunction_name(object.getFunction_name());
+            returnObject.setParameters_to_send(object.getParameters_to_send());
+            //return returnObject;
         } finally {
             if (conn_ != null)
                 conn_.disconnect();

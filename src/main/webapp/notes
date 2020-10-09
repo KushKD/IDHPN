@@ -233,3 +233,5 @@ ALTER TABLE  log_vahan_service ADD COLUMN rc_status_as_on_date character varying
 
 -- Changes Table
 ALTER TABLE  log_vahan_service ADD COLUMN rc_owner_name character varying (100);
+
+-- java -cp x.jar service.App

@@ -63,11 +63,13 @@ public class NetworkUtils {
         try {
             URL url_ = new URL(url);
             conn = (HttpURLConnection) url_.openConnection();
-//            if (url_.toString().startsWith("https")) {
-//                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) conn;
-//                httpsURLConnection.setSSLSocketFactory(getSSLSocketFactory());
-//        }
-        //    conn = (HttpURLConnection) url_.openConnection();
+            if (url_.toString().startsWith("https")) {
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) conn;
+                httpsURLConnection.setSSLSocketFactory(getSSLSocketFactory());
+        }else{
+                conn = (HttpURLConnection) url_.openConnection();
+            }
+
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setUseCaches(false);
