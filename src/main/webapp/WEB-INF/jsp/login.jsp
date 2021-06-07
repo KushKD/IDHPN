@@ -23,7 +23,7 @@
               <h2 class="col-md-12"  style="color:white;">Himachal Pradesh Police Transport ID System </h2><br>
             </div>
       <div class="login-box">
-         <form  method="post"class="login-form"  action="${pageContext.request.contextPath}/login">
+         <form  method="post" class="loginForm"  action="${pageContext.request.contextPath}/verifylogin">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
             <label class="control-label" for="username" >Username:</label><br>
@@ -34,7 +34,11 @@
                  <input class="form-control" type="password" name="password"  maxLength="10" size="10" id="password" class="form-control">
                    </div>
 
-
+   <div class="form-group">
+   <label for="domain" class="sr-only">Domain</label>
+   <input type="text" id="domain" name="domain" class="form-control"
+     placeholder="Domain" />
+ </div>
 
 
            <div class="form-group">

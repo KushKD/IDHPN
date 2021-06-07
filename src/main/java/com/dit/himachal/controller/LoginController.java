@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class LoginController {
@@ -32,6 +33,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
+        System.out.println("This is Login Controller");
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
@@ -41,8 +43,9 @@ public class LoginController {
         return "login";
     }
 
-        @GetMapping(value =  "/verifylogin")
-        public String homePagev(@RequestBody LoginForm data_) {
+
+        @RequestMapping(value = "/verifylogin", method = RequestMethod.POST)
+        public String homePagev(@RequestBody LoginForm data_, HttpServletResponse response, HttpServletRequest request) {
             System.out.println("#@#@#@#@#@#"+data_);
            // if(captchaResponse!=null ){
 

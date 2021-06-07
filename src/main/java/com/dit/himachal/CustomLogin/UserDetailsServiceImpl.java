@@ -1,6 +1,5 @@
 package com.dit.himachal.CustomLogin;
 
-import com.dit.himachal.apicontroller.API;
 import com.dit.himachal.entities.RolesEntity;
 import com.dit.himachal.entities.UserEntity;
 import com.dit.himachal.repositories.UserRepository;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
